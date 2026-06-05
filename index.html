@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flying Penguin</title>
+<title>企鹅科技生态 | PENGUIN TECH ECOSYSTEM</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -19,8 +21,8 @@ scroll-behavior:smooth;
 }
 
 body{
-font-family:'Orbitron',sans-serif;
-background:#050505;
+font-family:'SF Pro Display',sans-serif;
+background:#000;
 color:white;
 overflow-x:hidden;
 }
@@ -40,36 +42,40 @@ nav{
 position:fixed;
 top:0;
 width:100%;
-padding:20px;
+padding:22px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:rgba(0,0,0,0.5);
-backdrop-filter:blur(10px);
-z-index:999;
+background:rgba(0,0,0,0.65);
+backdrop-filter:blur(18px);
+z-index:9999;
+border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 .logo{
 font-size:28px;
-font-weight:bold;
-color:#00ffe1;
-text-shadow:0 0 15px #00ffe1;
+font-weight:700;
+letter-spacing:2px;
+background:linear-gradient(90deg,#ffffff,#00c3ff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 nav ul{
 display:flex;
-gap:20px;
+gap:35px;
 list-style:none;
 }
 
 nav a{
 text-decoration:none;
-color:white;
+color:#d0d0d0;
+font-size:15px;
 transition:0.3s;
 }
 
 nav a:hover{
-color:#00ffe1;
+color:white;
 }
 
 /* 首页 */
@@ -85,328 +91,477 @@ padding:20px;
 }
 
 .hero h1{
-font-size:70px;
-text-shadow:0 0 25px #00ffe1;
-animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-from{
-text-shadow:0 0 10px #00ffe1;
-}
-to{
-text-shadow:0 0 40px #00ffe1;
-}
+font-size:95px;
+font-weight:700;
+line-height:1.1;
+background:linear-gradient(180deg,#ffffff,#888);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .hero p{
-margin-top:20px;
-font-size:22px;
-color:#ccc;
+margin-top:25px;
+font-size:24px;
+color:#bdbdbd;
+max-width:900px;
+line-height:1.8;
 }
 
-/* 按钮 */
+/* 苹果风按钮 */
+
+.buttons{
+margin-top:45px;
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+justify-content:center;
+}
 
 .btn{
-margin-top:30px;
 padding:15px 40px;
+border-radius:50px;
 border:none;
-border-radius:15px;
-background:#00ffe1;
-color:black;
-font-size:18px;
+font-size:17px;
+font-weight:600;
 cursor:pointer;
-transition:0.3s;
-font-weight:bold;
+transition:0.35s;
 }
 
-.btn:hover{
-transform:scale(1.1);
-box-shadow:0 0 30px #00ffe1;
+.primary{
+background:#0a84ff;
+color:white;
+}
+
+.primary:hover{
+transform:scale(1.05);
+box-shadow:0 0 30px rgba(10,132,255,0.7);
+}
+
+.secondary{
+background:rgba(255,255,255,0.08);
+color:white;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.1);
+}
+
+.secondary:hover{
+background:rgba(255,255,255,0.15);
+}
+
+/* 通用区域 */
+
+.section{
+padding:140px 10%;
+}
+
+.section-title{
+font-size:60px;
+text-align:center;
+margin-bottom:25px;
+font-weight:700;
+}
+
+.section-sub{
+text-align:center;
+font-size:22px;
+color:#a8a8a8;
+margin-bottom:80px;
+line-height:1.8;
 }
 
 /* 卡片 */
 
-.section{
-padding:120px 10%;
-}
-
-.title{
-font-size:45px;
-margin-bottom:40px;
-text-align:center;
-color:#00ffe1;
-}
-
 .cards{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:30px;
 }
 
 .card{
 background:rgba(255,255,255,0.05);
-padding:30px;
-border-radius:20px;
-backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.08);
+padding:40px;
+border-radius:30px;
+backdrop-filter:blur(18px);
 transition:0.4s;
-border:1px solid rgba(255,255,255,0.1);
 }
 
 .card:hover{
 transform:translateY(-10px);
-box-shadow:0 0 30px #00ffe1;
+background:rgba(255,255,255,0.08);
+box-shadow:0 0 40px rgba(255,255,255,0.08);
 }
 
-/* 音乐播放器 */
-
-.music-player{
-text-align:center;
-margin-top:40px;
+.card h3{
+font-size:28px;
+margin-bottom:20px;
 }
 
-/* AI区域 */
+.card p{
+color:#bdbdbd;
+line-height:1.9;
+font-size:17px;
+}
 
-.ai-box{
-margin-top:40px;
+/* 介绍区 */
+
+.about{
 display:flex;
-flex-direction:column;
-gap:20px;
+flex-wrap:wrap;
+gap:50px;
+align-items:center;
+justify-content:center;
 }
 
-textarea{
+.about-text{
+flex:1;
+min-width:300px;
+}
+
+.about-text h2{
+font-size:60px;
+margin-bottom:30px;
+}
+
+.about-text p{
+font-size:20px;
+line-height:2;
+color:#bdbdbd;
+}
+
+.about-image{
+flex:1;
+min-width:300px;
+}
+
+.about-image img{
 width:100%;
-height:150px;
-background:#111;
-border:none;
-color:white;
-padding:20px;
-border-radius:15px;
-font-size:16px;
+border-radius:40px;
+box-shadow:0 0 50px rgba(255,255,255,0.1);
 }
 
-.response{
-padding:20px;
-background:#111;
-border-radius:15px;
-min-height:100px;
-}
+/* 数据展示 */
 
-/* 时钟 */
-
-.clock{
-font-size:40px;
-text-align:center;
-margin-top:30px;
-color:#00ffe1;
-}
-
-/* 图片 */
-
-.gallery{
+.stats{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:30px;
+margin-top:80px;
 }
 
-.gallery img{
-width:100%;
-border-radius:20px;
-transition:0.4s;
+.stat{
+text-align:center;
+padding:40px;
+background:rgba(255,255,255,0.04);
+border-radius:30px;
 }
 
-.gallery img:hover{
-transform:scale(1.05);
+.stat h1{
+font-size:55px;
+margin-bottom:15px;
+color:#0a84ff;
 }
 
-/* footer */
+.stat p{
+color:#bdbdbd;
+}
+
+/* Footer */
 
 footer{
-padding:40px;
+padding:80px 10%;
 text-align:center;
-background:black;
-margin-top:100px;
+border-top:1px solid rgba(255,255,255,0.08);
+background:#050505;
+}
+
+footer h2{
+font-size:38px;
+margin-bottom:20px;
+}
+
+footer p{
+color:#8a8a8a;
+line-height:2;
+}
+
+/* 响应式 */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:60px;
+}
+
+.section-title{
+font-size:42px;
+}
+
+.about-text h2{
+font-size:42px;
+}
+
 }
 
 </style>
+
 </head>
 
 <body>
 
 <canvas id="stars"></canvas>
 
+<!-- 导航栏 -->
+
 <nav>
 
-<div class="logo">Flying Penguin</div>
+<div class="logo">企鹅科技生态</div>
 
 <ul>
 <li><a href="#home">首页</a></li>
-<li><a href="#functions">功能</a></li>
-<li><a href="#gallery">图库</a></li>
-<li><a href="#ai">AI</a></li>
+<li><a href="#features">功能</a></li>
+<li><a href="#about">关于</a></li>
+<li><a href="#future">未来</a></li>
 </ul>
 
 </nav>
 
+<!-- 首页 -->
+
 <section class="hero" id="home">
 
-<h1>CYBER WEBSITE</h1>
+<h1>PENGUIN<br>TECH ECOSYSTEM</h1>
 
-<p>未来 · 赛博朋克 · AI · 星空</p>
+<p>
 
-<button class="btn" onclick="openBilibili()">进入我的B站</button>
+探索未来航天文明 · 打造属于玩家的 SFS 宇宙科技社区<br>
+Spaceflight Simulator · 航天科技 · 深空探索 · 火箭工程
 
-<button class="btn" onclick="openQQ()">联系QQ</button>
+</p>
+
+<div class="buttons">
+
+<button class="btn primary"
+onclick="window.open('https://space.bilibili.com/')">
+
+进入社区
+
+</button>
+
+<button class="btn secondary"
+onclick="window.open('https://github.com/')">
+
+GitHub
+
+</button>
+
+<button class="btn secondary"
+onclick="window.open('https://wpa.qq.com/msgrd?v=3&uin=2324298768&site=qq&menu=yes')">
+
+联系QQ
+
+</button>
+
+</div>
 
 </section>
 
-<section class="section" id="functions">
+<!-- 核心内容 -->
 
-<h2 class="title">网站功能</h2>
+<section class="section" id="features">
+
+<h1 class="section-title">核心内容</h1>
+
+<p class="section-sub">
+
+未来航天科技社区 · SFS 玩家宇宙生态
+
+</p>
 
 <div class="cards">
 
 <div class="card">
-<h3>AI聊天</h3>
-<p>未来可接入 DeepSeek / GPT</p>
+<h3>🚀 SFS 模组分享</h3>
+<p>
+海量 Spaceflight Simulator 模组资源与未来科技扩展。
+</p>
 </div>
 
 <div class="card">
-<h3>音乐播放器</h3>
-<p>支持自动播放音乐</p>
+<h3>🛰 火箭蓝图下载</h3>
+<p>
+超级重型火箭、深空探测器、空间站蓝图系统。
+</p>
 </div>
 
 <div class="card">
-<h3>动态星空</h3>
-<p>实时Canvas背景</p>
+<h3>🌌 深空探索计划</h3>
+<p>
+探索火星、木星轨道与未来深空文明。
+</p>
 </div>
 
 <div class="card">
-<h3>响应式UI</h3>
-<p>支持手机和电脑</p>
+<h3>🤖 AI航天助手</h3>
+<p>
+未来接入AI智能分析系统与自动航天设计。
+</p>
 </div>
 
 <div class="card">
-<h3>赛博朋克风</h3>
-<p>霓虹灯视觉效果</p>
+<h3>🛸 空间站建造</h3>
+<p>
+多人协作建设未来轨道空间站与深空基地。
+</p>
 </div>
 
 <div class="card">
-<h3>动画系统</h3>
-<p>炫酷动态交互</p>
+<h3>🌠 玩家社区</h3>
+<p>
+全球SFS玩家交流、科技论坛与深空计划。
+</p>
 </div>
-
-</div>
-
-<div class="clock" id="clock"></div>
-
-<div class="music-player">
-
-<h2 style="margin-bottom:20px;">音乐播放器</h2>
-
-<audio controls autoplay loop>
-<source src="https://files.catbox.moe/7w1x8p.mp3" type="audio/mp3">
-</audio>
 
 </div>
 
 </section>
 
-<section class="section" id="gallery">
+<!-- 关于 -->
 
-<h2 class="title">图库</h2>
+<section class="section" id="about">
 
-<div class="gallery">
+<div class="about">
 
-<img src="https://picsum.photos/500/500?1">
-<img src="https://picsum.photos/500/500?2">
-<img src="https://picsum.photos/500/500?3">
-<img src="https://picsum.photos/500/500?4">
+<div class="about-text">
+
+<h2>关于我们</h2>
+
+<p>
+
+企鹅科技生态是一个以
+Spaceflight Simulator（SFS）
+为核心的未来航天科技社区。
+
+这里聚集：
+
+<br><br>
+
+• 火箭设计玩家<br>
+• 深空探索爱好者<br>
+• 航天工程创作者<br>
+• 科幻科技玩家<br>
+• 模组开发者
+
+<br><br>
+
+共同打造属于未来的太空文明。
+
+</p>
+
+</div>
+
+<div class="about-image">
+
+<img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1600&auto=format&fit=crop">
+
+</div>
+
+</div>
+
+<!-- 数据 -->
+
+<div class="stats">
+
+<div class="stat">
+<h1>2026</h1>
+<p>未来科技生态</p>
+</div>
+
+<div class="stat">
+<h1>SFS</h1>
+<p>航天核心社区</p>
+</div>
+
+<div class="stat">
+<h1>AI</h1>
+<p>智能航天助手</p>
+</div>
+
+<div class="stat">
+<h1>∞</h1>
+<p>无限深空探索</p>
+</div>
 
 </div>
 
 </section>
 
-<section class="section" id="ai">
+<!-- 未来 -->
 
-<h2 class="title">AI聊天模拟</h2>
+<section class="section" id="future">
 
-<div class="ai-box">
+<h1 class="section-title">未来科技生态</h1>
 
-<textarea id="userInput" placeholder="输入你的问题..."></textarea>
+<p class="section-sub">
 
-<button class="btn" onclick="fakeAI()">发送</button>
+不仅仅是游戏网站。<br><br>
 
-<div class="response" id="response">
-AI将在这里回复...
+这里是：<br><br>
+
+一个属于航天玩家的未来宇宙。<br><br>
+
+科技 · 探索 · 自由 · 未来
+
+</p>
+
+<div class="cards">
+
+<div class="card">
+<h3>🌍 月球基地工程</h3>
+<p>
+建设未来月球轨道基地与深空科研站。
+</p>
+</div>
+
+<div class="card">
+<h3>🚀 火星殖民计划</h3>
+<p>
+打造属于未来玩家文明的火星生态。
+</p>
+</div>
+
+<div class="card">
+<h3>🛰 深空舰队系统</h3>
+<p>
+探索宇宙边缘，建立未来星际舰队。
+</p>
 </div>
 
 </div>
 
 </section>
+
+<!-- Footer -->
 
 <footer>
 
-<h2>Flying Penguin © 2026</h2>
+<h2>企鹅科技生态</h2>
 
-<p>Cyberpunk Website</p>
+<p>
+
+PENGUIN TECH ECOSYSTEM<br><br>
+
+“让每个人都能触碰星辰。”<br><br>
+
+© 2026 Penguin Tech Ecosystem
+
+</p>
 
 </footer>
 
 <script>
 
-/* B站 */
-
-function openBilibili(){
-window.open("https://space.bilibili.com/");
-}
-
-/* QQ */
-
-function openQQ(){
-window.open("https://wpa.qq.com/msgrd?v=3&uin=2324298768&site=qq&menu=yes");
-}
-
-/* AI模拟 */
-
-function fakeAI(){
-
-let input=document.getElementById("userInput").value;
-
-let response=document.getElementById("response");
-
-if(input===""){
-response.innerHTML="请输入内容";
-return;
-}
-
-response.innerHTML="AI正在思考中...";
-
-setTimeout(()=>{
-
-response.innerHTML=
-"你输入的是：<br><br>"+input+
-"<br><br>这是未来AI功能区域。";
-
-},1500);
-
-}
-
-/* 时钟 */
-
-function updateClock(){
-
-let now=new Date();
-
-let time=now.toLocaleTimeString();
-
-document.getElementById("clock").innerHTML=time;
-
-}
-
-setInterval(updateClock,1000);
-
-/* 星空 */
+/* 星空背景 */
 
 const canvas=document.getElementById("stars");
 const ctx=canvas.getContext("2d");
