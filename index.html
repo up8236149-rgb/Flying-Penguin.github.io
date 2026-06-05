@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>企鹅科技生态圈</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Noto Sans SC',sans-serif;
+    background:#050507;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* 动态背景 */
+
+.bg-animation{
+    position:fixed;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    z-index:-2;
+}
+
+.bg-animation span{
+    position:absolute;
+    width:4px;
+    height:120px;
+    background:linear-gradient(transparent,#8b5cf6);
+    animation:fall 6s linear infinite;
+    opacity:0.4;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-200px);
+    }
+    to{
+        transform:translateY(120vh);
+    }
+}
+
+/* 发光背景 */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle,#7b2cff55 0%,transparent 70%);
+    top:-200px;
+    right:-200px;
+    z-index:-1;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle,#00b7ff22 0%,transparent 70%);
+    bottom:-200px;
+    left:-200px;
+    z-index:-1;
+}
+
+/* 导航 */
+
+nav{
+    position:fixed;
+    width:100%;
+    top:0;
+    z-index:999;
+    backdrop-filter:blur(15px);
+    background:rgba(0,0,0,0.45);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.nav-container{
+    max-width:1400px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 40px;
+}
+
+.logo{
+    font-family:'Orbitron',sans-serif;
+    color:#b56dff;
+    font-size:1.4rem;
+    font-weight:700;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#b56dff;
+}
+
+/* 首页 */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 20px;
+}
+
+.hero-content{
+    max-width:1000px;
+    animation:fadeUp 1s ease;
+}
+
+.avatar{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #8b5cf6;
+    box-shadow:0 0 40px #7b2cff88;
+    margin-bottom:35px;
+    transition:0.4s;
+}
+
+.avatar:hover{
+    transform:scale(1.05) rotate(2deg);
+}
+
+.hero h1{
+    font-size:5rem;
+    font-family:'Orbitron',sans-serif;
+    background:linear-gradient(90deg,#ffffff,#b56dff,#00c3ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    margin-bottom:25px;
+}
+
+.hero p{
+    color:#bfbfbf;
+    line-height:1.9;
+    font-size:1.15rem;
+    margin-bottom:40px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.btn{
+    padding:15px 35px;
+    border-radius:50px;
+    text-decoration:none;
+    transition:0.3s;
+    font-weight:600;
+}
+
+.btn-primary{
+    background:linear-gradient(90deg,#7b2cff,#a855f7);
+    color:white;
+    box-shadow:0 0 25px #7b2cff77;
+}
+
+.btn-primary:hover{
+    transform:translateY(-4px);
+}
+
+.btn-secondary{
+    border:1px solid #777;
+    color:white;
+}
+
+.btn-secondary:hover{
+    border-color:#b56dff;
+    color:#b56dff;
+}
+
+/* section */
+
+section{
+    padding:120px 8%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:70px;
+}
+
+.section-title h2{
+    font-size:3rem;
+    font-family:'Orbitron',sans-serif;
+    margin-bottom:15px;
+}
+
+.section-title p{
+    color:#999;
+}
+
+/* 卡片 */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:35px;
+}
+
+.card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:25px;
+    padding:35px;
+    transition:0.4s;
+    backdrop-filter:blur(10px);
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    border-color:#8b5cf6;
+    box-shadow:0 0 35px rgba(139,92,246,0.25);
+}
+
+.card h3{
+    margin-bottom:18px;
+    font-size:1.5rem;
+}
+
+.card p{
+    color:#b6b6b6;
+    line-height:1.8;
+}
+
+/* AI区域 */
+
+.ai-box{
+    text-align:center;
+    background:linear-gradient(135deg,#13001f,#111827);
+    border-radius:30px;
+    padding:70px 30px;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.ai-box h2{
+    font-size:3rem;
+    margin-bottom:25px;
+    font-family:'Orbitron',sans-serif;
+}
+
+.ai-box input{
+    width:80%;
+    max-width:600px;
+    padding:18px;
+    border:none;
+    border-radius:15px;
+    background:#0d0d13;
+    color:white;
+    margin-top:25px;
+    font-size:1rem;
+}
+
+.ai-box button{
+    margin-top:20px;
+    padding:15px 30px;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(90deg,#7b2cff,#a855f7);
+    color:white;
+    cursor:pointer;
+}
+
+/* 联系 */
+
+.contact{
+    text-align:center;
+}
+
+.contact-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:25px;
+    margin-top:40px;
+}
+
+.contact-links a{
+    text-decoration:none;
+    padding:16px 30px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.05);
+    color:white;
+    transition:0.3s;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.contact-links a:hover{
+    background:#7b2cff;
+    transform:translateY(-5px);
+}
+
+/* footer */
+
+footer{
+    padding:40px;
+    text-align:center;
+    color:#777;
+    border-top:1px solid rgba(255,255,255,0.08);
+}
+
+/* 动画 */
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* 响应式 */
+
+@media(max-width:768px){
+
+    .hero h1{
+        font-size:3rem;
+    }
+
+    nav ul{
+        gap:15px;
+    }
+
+    .section-title h2{
+        font-size:2rem;
+    }
+
+    .ai-box h2{
+        font-size:2rem;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 动态背景 -->
+<div class="bg-animation" id="bg"></div>
+
+<!-- 导航 -->
+<nav>
+    <div class="nav-container">
+
+        <div class="logo">
+            企鹅科技生态圈
+        </div>
+
+        <ul>
+            <li><a href="#home">首页</a></li>
+            <li><a href="#products">产品</a></li>
+            <li><a href="#ai">AI</a></li>
+            <li><a href="#contact">联系</a></li>
+        </ul>
+
+    </div>
+</nav>
+
+<!-- 首页 -->
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <!-- 你的头像 -->
+        <img src="你的头像.png" class="avatar">
+
+        <h1>CYBER PENGUIN</h1>
+
+        <p>
+            黑色赛博朋克 × AI科技 × 游戏生态 × 未来宇宙<br>
+            打造属于未来玩家与开发者的科技帝国。
+        </p>
+
+        <div class="buttons">
+
+            <!-- B站 -->
+            <a href="https://b23.tv/s9bi0Jx" target="_blank" class="btn btn-primary">
+                进入我的B站主页
+            </a>
+
+            <!-- QQ -->
+            <a href="https://wpa.qq.com/msgrd?v=3&uin=2324298768&site=qq&menu=yes"
+               target="_blank"
+               class="btn btn-secondary">
+               联系QQ
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- 产品 -->
+<section id="products">
+
+    <div class="section-title">
+        <h2>核心生态</h2>
+        <p>未来科技与游戏融合系统</p>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>企鹅AI系统</h3>
+            <p>
+                集成智能聊天、AI绘图、
+                AI辅助创作与未来交互系统。
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>赛博朋克游戏宇宙</h3>
+            <p>
+                构建开放世界未来都市，
+                支持多人联机与动态剧情。
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>未来实验室</h3>
+            <p>
+                包含虚拟现实、黑科技UI、
+                数据可视化与数字生命计划。
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- AI区域 -->
+<section id="ai">
+
+    <div class="ai-box">
+
+        <h2>企鹅AI实验室</h2>
+
+        <p>
+            输入一句话，体验未来AI系统。
+        </p>
+
+        <input type="text" id="aiInput" placeholder="输入你想问AI的问题...">
+
+        <br>
+
+        <button onclick="runAI()">启动AI</button>
+
+        <h3 id="aiResult" style="margin-top:35px;color:#b56dff;"></h3>
+
+    </div>
+
+</section>
+
+<!-- 联系 -->
+<section id="contact">
+
+    <div class="section-title">
+        <h2>加入生态圈</h2>
+        <p>合作 · 开发 · 游戏 · 科技</p>
+    </div>
+
+    <div class="contact">
+
+        <div class="contact-links">
+
+            <a href="https://b23.tv/s9bi0Jx" target="_blank">
+                哔哩哔哩主页
+            </a>
+
+            <a href="https://github.com/" target="_blank">
+                GitHub
+            </a>
+
+            <a href="https://store.steampowered.com/" target="_blank">
+                Steam
+            </a>
+
+            <a href="https://openai.com/" target="_blank">
+                OpenAI
+            </a>
+
+            <a href="https://wpa.qq.com/msgrd?v=3&uin=2324298768&site=qq&menu=yes"
+               target="_blank">
+               QQ：2324298768
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 企鹅科技生态圈 | Cyber Future Studio
+</footer>
+
+<script>
+
+/* 背景粒子 */
+
+const bg = document.getElementById("bg");
+
+for(let i=0;i<45;i++){
+
+    const span = document.createElement("span");
+
+    span.style.left = Math.random()*100 + "%";
+    span.style.animationDuration = (Math.random()*5+3) + "s";
+    span.style.animationDelay = Math.random()*5 + "s";
+
+    bg.appendChild(span);
+
+}
+
+/* AI系统 */
+
+function runAI(){
+
+    const input = document.getElementById("aiInput").value;
+    const result = document.getElementById("aiResult");
+
+    if(input === ""){
+
+        result.innerHTML = "请输入内容";
+
+        return;
+    }
+
+    const replies = [
+
+        "未来已连接。",
+        "企鹅AI正在分析数据流...",
+        "赛博网络已启动。",
+        "检测到未知信号。",
+        "正在同步未来数据库。",
+        "欢迎进入企鹅科技宇宙。",
+        "AI核心正在运行。"
+
+    ];
+
+    const random = Math.floor(Math.random()*replies.length);
+
+    result.innerHTML = replies[random] + "<br><br>你输入的是：" + input;
+
+}
+
+/* 鼠标发光 */
+
+document.addEventListener("mousemove",e=>{
+
+    let glow = document.createElement("div");
+
+    glow.style.position = "fixed";
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
+    glow.style.width = "10px";
+    glow.style.height = "10px";
+    glow.style.borderRadius = "50%";
+    glow.style.background = "#8b5cf6";
+    glow.style.pointerEvents = "none";
+    glow.style.boxShadow = "0 0 20px #8b5cf6";
+    glow.style.zIndex = "9999";
+
+    document.body.appendChild(glow);
+
+    setTimeout(()=>{
+        glow.remove();
+    },300);
+
+});
+
+</script>
+
+</body>
+</html>{
