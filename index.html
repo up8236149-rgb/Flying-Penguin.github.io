@@ -1,372 +1,231 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>企鹅科技生态圈</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>Flying Penguin</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
 }
 
 body{
-    font-family:'Noto Sans SC',sans-serif;
-    background:#050507;
-    color:white;
-    overflow-x:hidden;
+font-family:'Orbitron',sans-serif;
+background:#050505;
+color:white;
+overflow-x:hidden;
 }
 
-/* 动态背景 */
+/* 星空背景 */
 
-.bg-animation{
-    position:fixed;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    z-index:-2;
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
 }
 
-.bg-animation span{
-    position:absolute;
-    width:4px;
-    height:120px;
-    background:linear-gradient(transparent,#8b5cf6);
-    animation:fall 6s linear infinite;
-    opacity:0.4;
-}
-
-@keyframes fall{
-    from{
-        transform:translateY(-200px);
-    }
-    to{
-        transform:translateY(120vh);
-    }
-}
-
-/* 发光背景 */
-
-body::before{
-    content:"";
-    position:fixed;
-    width:700px;
-    height:700px;
-    background:radial-gradient(circle,#7b2cff55 0%,transparent 70%);
-    top:-200px;
-    right:-200px;
-    z-index:-1;
-}
-
-body::after{
-    content:"";
-    position:fixed;
-    width:600px;
-    height:600px;
-    background:radial-gradient(circle,#00b7ff22 0%,transparent 70%);
-    bottom:-200px;
-    left:-200px;
-    z-index:-1;
-}
-
-/* 导航 */
+/* 导航栏 */
 
 nav{
-    position:fixed;
-    width:100%;
-    top:0;
-    z-index:999;
-    backdrop-filter:blur(15px);
-    background:rgba(0,0,0,0.45);
-    border-bottom:1px solid rgba(255,255,255,0.08);
-}
-
-.nav-container{
-    max-width:1400px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 40px;
+position:fixed;
+top:0;
+width:100%;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(10px);
+z-index:999;
 }
 
 .logo{
-    font-family:'Orbitron',sans-serif;
-    color:#b56dff;
-    font-size:1.4rem;
-    font-weight:700;
+font-size:28px;
+font-weight:bold;
+color:#00ffe1;
+text-shadow:0 0 15px #00ffe1;
 }
 
 nav ul{
-    display:flex;
-    list-style:none;
-    gap:30px;
+display:flex;
+gap:20px;
+list-style:none;
 }
 
 nav a{
-    color:white;
-    text-decoration:none;
-    transition:0.3s;
+text-decoration:none;
+color:white;
+transition:0.3s;
 }
 
 nav a:hover{
-    color:#b56dff;
+color:#00ffe1;
 }
 
 /* 首页 */
 
 .hero{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:120px 20px;
-}
-
-.hero-content{
-    max-width:1000px;
-    animation:fadeUp 1s ease;
-}
-
-.avatar{
-    width:180px;
-    height:180px;
-    border-radius:50%;
-    object-fit:cover;
-    border:4px solid #8b5cf6;
-    box-shadow:0 0 40px #7b2cff88;
-    margin-bottom:35px;
-    transition:0.4s;
-}
-
-.avatar:hover{
-    transform:scale(1.05) rotate(2deg);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:20px;
 }
 
 .hero h1{
-    font-size:5rem;
-    font-family:'Orbitron',sans-serif;
-    background:linear-gradient(90deg,#ffffff,#b56dff,#00c3ff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    margin-bottom:25px;
+font-size:70px;
+text-shadow:0 0 25px #00ffe1;
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{
+text-shadow:0 0 10px #00ffe1;
+}
+to{
+text-shadow:0 0 40px #00ffe1;
+}
 }
 
 .hero p{
-    color:#bfbfbf;
-    line-height:1.9;
-    font-size:1.15rem;
-    margin-bottom:40px;
+margin-top:20px;
+font-size:22px;
+color:#ccc;
 }
 
-.buttons{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:20px;
-}
+/* 按钮 */
 
 .btn{
-    padding:15px 35px;
-    border-radius:50px;
-    text-decoration:none;
-    transition:0.3s;
-    font-weight:600;
+margin-top:30px;
+padding:15px 40px;
+border:none;
+border-radius:15px;
+background:#00ffe1;
+color:black;
+font-size:18px;
+cursor:pointer;
+transition:0.3s;
+font-weight:bold;
 }
 
-.btn-primary{
-    background:linear-gradient(90deg,#7b2cff,#a855f7);
-    color:white;
-    box-shadow:0 0 25px #7b2cff77;
-}
-
-.btn-primary:hover{
-    transform:translateY(-4px);
-}
-
-.btn-secondary{
-    border:1px solid #777;
-    color:white;
-}
-
-.btn-secondary:hover{
-    border-color:#b56dff;
-    color:#b56dff;
-}
-
-/* section */
-
-section{
-    padding:120px 8%;
-}
-
-.section-title{
-    text-align:center;
-    margin-bottom:70px;
-}
-
-.section-title h2{
-    font-size:3rem;
-    font-family:'Orbitron',sans-serif;
-    margin-bottom:15px;
-}
-
-.section-title p{
-    color:#999;
+.btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 30px #00ffe1;
 }
 
 /* 卡片 */
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:35px;
+.section{
+padding:120px 10%;
+}
+
+.title{
+font-size:45px;
+margin-bottom:40px;
+text-align:center;
+color:#00ffe1;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
 }
 
 .card{
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:25px;
-    padding:35px;
-    transition:0.4s;
-    backdrop-filter:blur(10px);
+background:rgba(255,255,255,0.05);
+padding:30px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+transition:0.4s;
+border:1px solid rgba(255,255,255,0.1);
 }
 
 .card:hover{
-    transform:translateY(-10px);
-    border-color:#8b5cf6;
-    box-shadow:0 0 35px rgba(139,92,246,0.25);
+transform:translateY(-10px);
+box-shadow:0 0 30px #00ffe1;
 }
 
-.card h3{
-    margin-bottom:18px;
-    font-size:1.5rem;
-}
+/* 音乐播放器 */
 
-.card p{
-    color:#b6b6b6;
-    line-height:1.8;
+.music-player{
+text-align:center;
+margin-top:40px;
 }
 
 /* AI区域 */
 
 .ai-box{
-    text-align:center;
-    background:linear-gradient(135deg,#13001f,#111827);
-    border-radius:30px;
-    padding:70px 30px;
-    border:1px solid rgba(255,255,255,0.08);
+margin-top:40px;
+display:flex;
+flex-direction:column;
+gap:20px;
 }
 
-.ai-box h2{
-    font-size:3rem;
-    margin-bottom:25px;
-    font-family:'Orbitron',sans-serif;
+textarea{
+width:100%;
+height:150px;
+background:#111;
+border:none;
+color:white;
+padding:20px;
+border-radius:15px;
+font-size:16px;
 }
 
-.ai-box input{
-    width:80%;
-    max-width:600px;
-    padding:18px;
-    border:none;
-    border-radius:15px;
-    background:#0d0d13;
-    color:white;
-    margin-top:25px;
-    font-size:1rem;
+.response{
+padding:20px;
+background:#111;
+border-radius:15px;
+min-height:100px;
 }
 
-.ai-box button{
-    margin-top:20px;
-    padding:15px 30px;
-    border:none;
-    border-radius:15px;
-    background:linear-gradient(90deg,#7b2cff,#a855f7);
-    color:white;
-    cursor:pointer;
+/* 时钟 */
+
+.clock{
+font-size:40px;
+text-align:center;
+margin-top:30px;
+color:#00ffe1;
 }
 
-/* 联系 */
+/* 图片 */
 
-.contact{
-    text-align:center;
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
 }
 
-.contact-links{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:25px;
-    margin-top:40px;
+.gallery img{
+width:100%;
+border-radius:20px;
+transition:0.4s;
 }
 
-.contact-links a{
-    text-decoration:none;
-    padding:16px 30px;
-    border-radius:18px;
-    background:rgba(255,255,255,0.05);
-    color:white;
-    transition:0.3s;
-    border:1px solid rgba(255,255,255,0.08);
-}
-
-.contact-links a:hover{
-    background:#7b2cff;
-    transform:translateY(-5px);
+.gallery img:hover{
+transform:scale(1.05);
 }
 
 /* footer */
 
 footer{
-    padding:40px;
-    text-align:center;
-    color:#777;
-    border-top:1px solid rgba(255,255,255,0.08);
-}
-
-/* 动画 */
-
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(40px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* 响应式 */
-
-@media(max-width:768px){
-
-    .hero h1{
-        font-size:3rem;
-    }
-
-    nav ul{
-        gap:15px;
-    }
-
-    .section-title h2{
-        font-size:2rem;
-    }
-
-    .ai-box h2{
-        font-size:2rem;
-    }
-
+padding:40px;
+text-align:center;
+background:black;
+margin-top:100px;
 }
 
 </style>
@@ -374,242 +233,255 @@ footer{
 
 <body>
 
-<!-- 动态背景 -->
-<div class="bg-animation" id="bg"></div>
+<canvas id="stars"></canvas>
 
-<!-- 导航 -->
 <nav>
-    <div class="nav-container">
 
-        <div class="logo">
-            企鹅科技生态圈
-        </div>
+<div class="logo">Flying Penguin</div>
 
-        <ul>
-            <li><a href="#home">首页</a></li>
-            <li><a href="#products">产品</a></li>
-            <li><a href="#ai">AI</a></li>
-            <li><a href="#contact">联系</a></li>
-        </ul>
+<ul>
+<li><a href="#home">首页</a></li>
+<li><a href="#functions">功能</a></li>
+<li><a href="#gallery">图库</a></li>
+<li><a href="#ai">AI</a></li>
+</ul>
 
-    </div>
 </nav>
 
-<!-- 首页 -->
 <section class="hero" id="home">
 
-    <div class="hero-content">
+<h1>CYBER WEBSITE</h1>
 
-        <!-- 你的头像 -->
-        <img src="你的头像.png" class="avatar">
+<p>未来 · 赛博朋克 · AI · 星空</p>
 
-        <h1>CYBER PENGUIN</h1>
+<button class="btn" onclick="openBilibili()">进入我的B站</button>
 
-        <p>
-            黑色赛博朋克 × AI科技 × 游戏生态 × 未来宇宙<br>
-            打造属于未来玩家与开发者的科技帝国。
-        </p>
-
-        <div class="buttons">
-
-            <!-- B站 -->
-            <a href="https://b23.tv/s9bi0Jx" target="_blank" class="btn btn-primary">
-                进入我的B站主页
-            </a>
-
-            <!-- QQ -->
-            <a href="https://wpa.qq.com/msgrd?v=3&uin=2324298768&site=qq&menu=yes"
-               target="_blank"
-               class="btn btn-secondary">
-               联系QQ
-            </a>
-
-        </div>
-
-    </div>
+<button class="btn" onclick="openQQ()">联系QQ</button>
 
 </section>
 
-<!-- 产品 -->
-<section id="products">
+<section class="section" id="functions">
 
-    <div class="section-title">
-        <h2>核心生态</h2>
-        <p>未来科技与游戏融合系统</p>
-    </div>
+<h2 class="title">网站功能</h2>
 
-    <div class="grid">
+<div class="cards">
 
-        <div class="card">
-            <h3>企鹅AI系统</h3>
-            <p>
-                集成智能聊天、AI绘图、
-                AI辅助创作与未来交互系统。
-            </p>
-        </div>
+<div class="card">
+<h3>AI聊天</h3>
+<p>未来可接入 DeepSeek / GPT</p>
+</div>
 
-        <div class="card">
-            <h3>赛博朋克游戏宇宙</h3>
-            <p>
-                构建开放世界未来都市，
-                支持多人联机与动态剧情。
-            </p>
-        </div>
+<div class="card">
+<h3>音乐播放器</h3>
+<p>支持自动播放音乐</p>
+</div>
 
-        <div class="card">
-            <h3>未来实验室</h3>
-            <p>
-                包含虚拟现实、黑科技UI、
-                数据可视化与数字生命计划。
-            </p>
-        </div>
+<div class="card">
+<h3>动态星空</h3>
+<p>实时Canvas背景</p>
+</div>
 
-    </div>
+<div class="card">
+<h3>响应式UI</h3>
+<p>支持手机和电脑</p>
+</div>
 
-</section>
+<div class="card">
+<h3>赛博朋克风</h3>
+<p>霓虹灯视觉效果</p>
+</div>
 
-<!-- AI区域 -->
-<section id="ai">
+<div class="card">
+<h3>动画系统</h3>
+<p>炫酷动态交互</p>
+</div>
 
-    <div class="ai-box">
+</div>
 
-        <h2>企鹅AI实验室</h2>
+<div class="clock" id="clock"></div>
 
-        <p>
-            输入一句话，体验未来AI系统。
-        </p>
+<div class="music-player">
 
-        <input type="text" id="aiInput" placeholder="输入你想问AI的问题...">
+<h2 style="margin-bottom:20px;">音乐播放器</h2>
 
-        <br>
+<audio controls autoplay loop>
+<source src="https://files.catbox.moe/7w1x8p.mp3" type="audio/mp3">
+</audio>
 
-        <button onclick="runAI()">启动AI</button>
-
-        <h3 id="aiResult" style="margin-top:35px;color:#b56dff;"></h3>
-
-    </div>
+</div>
 
 </section>
 
-<!-- 联系 -->
-<section id="contact">
+<section class="section" id="gallery">
 
-    <div class="section-title">
-        <h2>加入生态圈</h2>
-        <p>合作 · 开发 · 游戏 · 科技</p>
-    </div>
+<h2 class="title">图库</h2>
 
-    <div class="contact">
+<div class="gallery">
 
-        <div class="contact-links">
+<img src="https://picsum.photos/500/500?1">
+<img src="https://picsum.photos/500/500?2">
+<img src="https://picsum.photos/500/500?3">
+<img src="https://picsum.photos/500/500?4">
 
-            <a href="https://b23.tv/s9bi0Jx" target="_blank">
-                哔哩哔哩主页
-            </a>
+</div>
 
-            <a href="https://github.com/" target="_blank">
-                GitHub
-            </a>
+</section>
 
-            <a href="https://store.steampowered.com/" target="_blank">
-                Steam
-            </a>
+<section class="section" id="ai">
 
-            <a href="https://openai.com/" target="_blank">
-                OpenAI
-            </a>
+<h2 class="title">AI聊天模拟</h2>
 
-            <a href="https://wpa.qq.com/msgrd?v=3&uin=2324298768&site=qq&menu=yes"
-               target="_blank">
-               QQ：2324298768
-            </a>
+<div class="ai-box">
 
-        </div>
+<textarea id="userInput" placeholder="输入你的问题..."></textarea>
 
-    </div>
+<button class="btn" onclick="fakeAI()">发送</button>
+
+<div class="response" id="response">
+AI将在这里回复...
+</div>
+
+</div>
 
 </section>
 
 <footer>
-    © 2026 企鹅科技生态圈 | Cyber Future Studio
+
+<h2>Flying Penguin © 2026</h2>
+
+<p>Cyberpunk Website</p>
+
 </footer>
 
 <script>
 
-/* 背景粒子 */
+/* B站 */
 
-const bg = document.getElementById("bg");
+function openBilibili(){
+window.open("https://space.bilibili.com/");
+}
 
-for(let i=0;i<45;i++){
+/* QQ */
 
-    const span = document.createElement("span");
+function openQQ(){
+window.open("https://wpa.qq.com/msgrd?v=3&uin=2324298768&site=qq&menu=yes");
+}
 
-    span.style.left = Math.random()*100 + "%";
-    span.style.animationDuration = (Math.random()*5+3) + "s";
-    span.style.animationDelay = Math.random()*5 + "s";
+/* AI模拟 */
 
-    bg.appendChild(span);
+function fakeAI(){
+
+let input=document.getElementById("userInput").value;
+
+let response=document.getElementById("response");
+
+if(input===""){
+response.innerHTML="请输入内容";
+return;
+}
+
+response.innerHTML="AI正在思考中...";
+
+setTimeout(()=>{
+
+response.innerHTML=
+"你输入的是：<br><br>"+input+
+"<br><br>这是未来AI功能区域。";
+
+},1500);
 
 }
 
-/* AI系统 */
+/* 时钟 */
 
-function runAI(){
+function updateClock(){
 
-    const input = document.getElementById("aiInput").value;
-    const result = document.getElementById("aiResult");
+let now=new Date();
 
-    if(input === ""){
+let time=now.toLocaleTimeString();
 
-        result.innerHTML = "请输入内容";
-
-        return;
-    }
-
-    const replies = [
-
-        "未来已连接。",
-        "企鹅AI正在分析数据流...",
-        "赛博网络已启动。",
-        "检测到未知信号。",
-        "正在同步未来数据库。",
-        "欢迎进入企鹅科技宇宙。",
-        "AI核心正在运行。"
-
-    ];
-
-    const random = Math.floor(Math.random()*replies.length);
-
-    result.innerHTML = replies[random] + "<br><br>你输入的是：" + input;
+document.getElementById("clock").innerHTML=time;
 
 }
 
-/* 鼠标发光 */
+setInterval(updateClock,1000);
 
-document.addEventListener("mousemove",e=>{
+/* 星空 */
 
-    let glow = document.createElement("div");
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
 
-    glow.style.position = "fixed";
-    glow.style.left = e.clientX + "px";
-    glow.style.top = e.clientY + "px";
-    glow.style.width = "10px";
-    glow.style.height = "10px";
-    glow.style.borderRadius = "50%";
-    glow.style.background = "#8b5cf6";
-    glow.style.pointerEvents = "none";
-    glow.style.boxShadow = "0 0 20px #8b5cf6";
-    glow.style.zIndex = "9999";
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-    document.body.appendChild(glow);
+let stars=[];
 
-    setTimeout(()=>{
-        glow.remove();
-    },300);
+for(let i=0;i<300;i++){
+
+stars.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2,
+d:Math.random()*1
+
+});
+
+}
+
+function drawStars(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="white";
+
+ctx.beginPath();
+
+for(let i=0;i<stars.length;i++){
+
+let s=stars[i];
+
+ctx.moveTo(s.x,s.y);
+
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2,true);
+
+}
+
+ctx.fill();
+
+moveStars();
+
+}
+
+function moveStars(){
+
+for(let i=0;i<stars.length;i++){
+
+let s=stars[i];
+
+s.y+=s.d;
+
+if(s.y>canvas.height){
+
+s.y=0;
+s.x=Math.random()*canvas.width;
+
+}
+
+}
+
+}
+
+setInterval(drawStars,33);
+
+window.addEventListener("resize",()=>{
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
 });
 
 </script>
 
 </body>
-</html>{
+</html>
