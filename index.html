@@ -1,642 +1,1748 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>企鹅科技生态 | PENGUIN TECH ECOSYSTEM</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    
+<!-- 高亮框插件 - 开始 -->
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-scroll-behavior:smooth;
+/* 高亮框插件样式 */
+.highlight-plugin-active {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
 }
 
-body{
-font-family:'SF Pro Display',sans-serif;
-background:#000;
-color:white;
-overflow-x:hidden;
+.highlight-plugin-hover {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5),
+                0 0 20px rgba(59, 130, 246, 0.3) !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    z-index: 1000 !important;
+    border-color: #3b82f6 !important;
 }
 
-/* 星空背景 */
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
+.highlight-plugin-touch {
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.6),
+                0 0 25px rgba(139, 92, 246, 0.4) !important;
+    transform: translateY(-1px) scale(1.01) !important;
+    z-index: 1000 !important;
+    border-color: #8b5cf6 !important;
 }
 
-/* 导航栏 */
-
-nav{
-position:fixed;
-top:0;
-width:100%;
-padding:22px 8%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:rgba(0,0,0,0.65);
-backdrop-filter:blur(18px);
-z-index:9999;
-border-bottom:1px solid rgba(255,255,255,0.08);
+/* 调试模式下的轮廓线 */
+.highlight-plugin-debug .highlight-plugin-active {
+    outline: 1px dashed rgba(239, 68, 68, 0.3) !important;
 }
-
-.logo{
-font-size:28px;
-font-weight:700;
-letter-spacing:2px;
-background:linear-gradient(90deg,#ffffff,#00c3ff);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-nav ul{
-display:flex;
-gap:35px;
-list-style:none;
-}
-
-nav a{
-text-decoration:none;
-color:#d0d0d0;
-font-size:15px;
-transition:0.3s;
-}
-
-nav a:hover{
-color:white;
-}
-
-/* 首页 */
-
-.hero{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-padding:20px;
-}
-
-.hero h1{
-font-size:95px;
-font-weight:700;
-line-height:1.1;
-background:linear-gradient(180deg,#ffffff,#888);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.hero p{
-margin-top:25px;
-font-size:24px;
-color:#bdbdbd;
-max-width:900px;
-line-height:1.8;
-}
-
-/* 苹果风按钮 */
-
-.buttons{
-margin-top:45px;
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-justify-content:center;
-}
-
-.btn{
-padding:15px 40px;
-border-radius:50px;
-border:none;
-font-size:17px;
-font-weight:600;
-cursor:pointer;
-transition:0.35s;
-}
-
-.primary{
-background:#0a84ff;
-color:white;
-}
-
-.primary:hover{
-transform:scale(1.05);
-box-shadow:0 0 30px rgba(10,132,255,0.7);
-}
-
-.secondary{
-background:rgba(255,255,255,0.08);
-color:white;
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,0.1);
-}
-
-.secondary:hover{
-background:rgba(255,255,255,0.15);
-}
-
-/* 通用区域 */
-
-.section{
-padding:140px 10%;
-}
-
-.section-title{
-font-size:60px;
-text-align:center;
-margin-bottom:25px;
-font-weight:700;
-}
-
-.section-sub{
-text-align:center;
-font-size:22px;
-color:#a8a8a8;
-margin-bottom:80px;
-line-height:1.8;
-}
-
-/* 卡片 */
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:30px;
-}
-
-.card{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.08);
-padding:40px;
-border-radius:30px;
-backdrop-filter:blur(18px);
-transition:0.4s;
-}
-
-.card:hover{
-transform:translateY(-10px);
-background:rgba(255,255,255,0.08);
-box-shadow:0 0 40px rgba(255,255,255,0.08);
-}
-
-.card h3{
-font-size:28px;
-margin-bottom:20px;
-}
-
-.card p{
-color:#bdbdbd;
-line-height:1.9;
-font-size:17px;
-}
-
-/* 介绍区 */
-
-.about{
-display:flex;
-flex-wrap:wrap;
-gap:50px;
-align-items:center;
-justify-content:center;
-}
-
-.about-text{
-flex:1;
-min-width:300px;
-}
-
-.about-text h2{
-font-size:60px;
-margin-bottom:30px;
-}
-
-.about-text p{
-font-size:20px;
-line-height:2;
-color:#bdbdbd;
-}
-
-.about-image{
-flex:1;
-min-width:300px;
-}
-
-.about-image img{
-width:100%;
-border-radius:40px;
-box-shadow:0 0 50px rgba(255,255,255,0.1);
-}
-
-/* 数据展示 */
-
-.stats{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:30px;
-margin-top:80px;
-}
-
-.stat{
-text-align:center;
-padding:40px;
-background:rgba(255,255,255,0.04);
-border-radius:30px;
-}
-
-.stat h1{
-font-size:55px;
-margin-bottom:15px;
-color:#0a84ff;
-}
-
-.stat p{
-color:#bdbdbd;
-}
-
-/* Footer */
-
-footer{
-padding:80px 10%;
-text-align:center;
-border-top:1px solid rgba(255,255,255,0.08);
-background:#050505;
-}
-
-footer h2{
-font-size:38px;
-margin-bottom:20px;
-}
-
-footer p{
-color:#8a8a8a;
-line-height:2;
-}
-
-/* 响应式 */
-
-@media(max-width:768px){
-
-.hero h1{
-font-size:60px;
-}
-
-.section-title{
-font-size:42px;
-}
-
-.about-text h2{
-font-size:42px;
-}
-
-}
-
 </style>
 
+<script>
+// 高亮框插件 v1.0
+(function() {
+    'use strict';
+    
+    // 配置选项
+    const config = {
+        // 高亮颜色（蓝色主题）
+        hoverColor: '#3b82f6',      // 鼠标悬停颜色
+        touchColor: '#8b5cf6',      // 触摸高亮颜色
+        shadowIntensity: 0.5,       // 阴影强度 0-1
+        animationDuration: 300,     // 动画时长（毫秒）
+        enableMobile: true,         // 启用移动端触摸支持
+        excludeSelectors: [         // 排除的元素选择器
+            'body',
+            'html',
+            '.no-highlight',
+            '[data-no-highlight]',
+            'script',
+            'style',
+            'meta',
+            'link'
+        ],
+        includeSelectors: [         // 包含的元素选择器（如果指定）
+            // 'button',
+            // 'a',
+            // 'input',
+            // 'select',
+            // 'textarea',
+            // '.interactive',
+            // '[data-highlight]'
+        ],
+        debugMode: false            // 调试模式（显示所有可高亮元素）
+    };
+    
+    // 初始化插件
+    function initHighlightPlugin() {
+        console.log('🔦 高亮框插件 v1.0 正在初始化...');
+        
+        // 获取所有需要添加高亮的元素
+        const elements = getHighlightableElements();
+        
+        if (elements.length === 0) {
+            console.warn('⚠️ 未找到可高亮的元素，请检查页面结构');
+            return;
+        }
+        
+        console.log(`✅ 找到 ${elements.length} 个可高亮元素`);
+        
+        // 为每个元素添加事件监听器
+        elements.forEach(element => {
+            setupElementEvents(element);
+        });
+        
+        // 添加调试模式类
+        if (config.debugMode) {
+            document.documentElement.classList.add('highlight-plugin-debug');
+        }
+        
+        // 添加全局样式
+        addGlobalStyles();
+        
+        console.log('🎉 高亮框插件初始化完成！');
+    }
+    
+    // 获取所有可高亮元素
+    function getHighlightableElements() {
+        let selectors = [
+            // 交互元素
+            'button',
+            'a',
+            'input',
+            'select',
+            'textarea',
+            'label',
+            
+            // 可点击元素
+            '[onclick]',
+            '[role="button"]',
+            '[role="link"]',
+            '[tabindex]:not([tabindex="-1"])',
+            
+            // 表单元素
+            'button[type]',
+            'input[type="button"]',
+            'input[type="submit"]',
+            'input[type="reset"]',
+            
+            // 自定义高亮元素
+            '.highlightable',
+            '[data-highlightable]'
+        ];
+        
+        // 如果指定了包含选择器，则使用它们
+        if (config.includeSelectors.length > 0) {
+            selectors = config.includeSelectors;
+        }
+        
+        // 获取所有匹配的元素
+        let allElements = [];
+        selectors.forEach(selector => {
+            try {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => allElements.push(el));
+            } catch (e) {
+                console.warn(`选择器 "${selector}" 无效:`, e);
+            }
+        });
+        
+        // 去重
+        allElements = [...new Set(allElements)];
+        
+        // 过滤排除的元素
+        return allElements.filter(element => {
+            // 检查是否在排除列表中
+            const isExcluded = config.excludeSelectors.some(selector => {
+                if (selector.startsWith('.') || selector.startsWith('[')) {
+                    return element.matches(selector);
+                }
+                return element.tagName.toLowerCase() === selector.toLowerCase();
+            });
+            
+            // 检查元素是否可见且可交互
+            const isVisible = element.offsetWidth > 0 && 
+                            element.offsetHeight > 0 && 
+                            window.getComputedStyle(element).display !== 'none';
+            
+            const isInteractive = !element.hasAttribute('disabled') && 
+                                element.getAttribute('aria-disabled') !== 'true';
+            
+            return !isExcluded && isVisible && isInteractive;
+        });
+    }
+    
+    // 为元素设置事件监听器
+    function setupElementEvents(element) {
+        // 添加基础类
+        element.classList.add('highlight-plugin-active');
+        
+        // 鼠标事件（桌面端）
+        element.addEventListener('mouseenter', handleMouseEnter);
+        element.addEventListener('mouseleave', handleMouseLeave);
+        
+        // 触摸事件（移动端）
+        if (config.enableMobile) {
+            element.addEventListener('touchstart', handleTouchStart, { passive: true });
+            element.addEventListener('touchend', handleTouchEnd, { passive: true });
+            element.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+        }
+        
+        // 焦点事件（键盘导航）
+        element.addEventListener('focus', handleFocus);
+        element.addEventListener('blur', handleBlur);
+        
+        // 点击事件（移除触摸高亮）
+        element.addEventListener('click', handleClick);
+    }
+    
+    // 事件处理函数
+    function handleMouseEnter(event) {
+        const element = event.currentTarget;
+        element.classList.add('highlight-plugin-hover');
+        element.classList.remove('highlight-plugin-touch');
+    }
+    
+    function handleMouseLeave(event) {
+        const element = event.currentTarget;
+        element.classList.remove('highlight-plugin-hover');
+    }
+    
+    function handleTouchStart(event) {
+        const element = event.currentTarget;
+        element.classList.add('highlight-plugin-touch');
+        element.classList.remove('highlight-plugin-hover');
+    }
+    
+    function handleTouchEnd(event) {
+        const element = event.currentTarget;
+        // 延迟移除触摸高亮，让用户看到反馈
+        setTimeout(() => {
+            element.classList.remove('highlight-plugin-touch');
+        }, 300);
+    }
+    
+    function handleFocus(event) {
+        const element = event.currentTarget;
+        element.classList.add('highlight-plugin-hover');
+    }
+    
+    function handleBlur(event) {
+        const element = event.currentTarget;
+        element.classList.remove('highlight-plugin-hover');
+        element.classList.remove('highlight-plugin-touch');
+    }
+    
+    function handleClick(event) {
+        const element = event.currentTarget;
+        element.classList.remove('highlight-plugin-touch');
+        
+        // 添加点击动画
+        element.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+            element.style.transform = '';
+        }, 150);
+    }
+    
+    // 添加全局样式
+    function addGlobalStyles() {
+        const styleId = 'highlight-plugin-dynamic-styles';
+        if (document.getElementById(styleId)) return;
+        
+        const style = document.createElement('style');
+        style.id = styleId;
+        style.textContent = `
+            /* 动态生成的样式 */
+            .highlight-plugin-active {
+                transition-property: box-shadow, transform, border-color !important;
+                transition-duration: ${config.animationDuration}ms !important;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+            }
+            
+            /* 防止过渡冲突 */
+            .highlight-plugin-active * {
+                transition: none !important;
+            }
+            
+            /* 打印时隐藏高亮效果 */
+            @media print {
+                .highlight-plugin-hover,
+                .highlight-plugin-touch {
+                    box-shadow: none !important;
+                    transform: none !important;
+                    border-color: inherit !important;
+                }
+            }
+        `;
+        
+        document.head.appendChild(style);
+    }
+    
+    // 公开API（可选）
+    window.HighlightPlugin = {
+        // 重新初始化插件
+        reinit: function() {
+            // 移除所有现有事件监听器
+            const elements = document.querySelectorAll('.highlight-plugin-active');
+            elements.forEach(element => {
+                element.classList.remove(
+                    'highlight-plugin-active',
+                    'highlight-plugin-hover',
+                    'highlight-plugin-touch'
+                );
+                
+                // 克隆元素以移除事件监听器（简单方法）
+                const newElement = element.cloneNode(true);
+                element.parentNode.replaceChild(newElement, element);
+            });
+            
+            // 重新初始化
+            initHighlightPlugin();
+        },
+        
+        // 添加元素到高亮列表
+        addElement: function(selectorOrElement) {
+            let elements = [];
+            
+            if (typeof selectorOrElement === 'string') {
+                elements = document.querySelectorAll(selectorOrElement);
+            } else if (selectorOrElement instanceof Element) {
+                elements = [selectorOrElement];
+            } else if (selectorOrElement instanceof NodeList || Array.isArray(selectorOrElement)) {
+                elements = selectorOrElement;
+            }
+            
+            elements.forEach(element => {
+                if (!element.classList.contains('highlight-plugin-active')) {
+                    setupElementEvents(element);
+                }
+            });
+        },
+        
+        // 从高亮列表中移除元素
+        removeElement: function(selectorOrElement) {
+            let elements = [];
+            
+            if (typeof selectorOrElement === 'string') {
+                elements = document.querySelectorAll(selectorOrElement);
+            } else if (selectorOrElement instanceof Element) {
+                elements = [selectorOrElement];
+            }
+            
+            elements.forEach(element => {
+                element.classList.remove(
+                    'highlight-plugin-active',
+                    'highlight-plugin-hover',
+                    'highlight-plugin-touch'
+                );
+                
+                // 移除事件监听器（通过克隆）
+                const newElement = element.cloneNode(true);
+                element.parentNode.replaceChild(newElement, element);
+            });
+        },
+        
+        // 更新配置
+        updateConfig: function(newConfig) {
+            Object.assign(config, newConfig);
+            this.reinit();
+        },
+        
+        // 获取当前配置
+        getConfig: function() {
+            return { ...config };
+        },
+        
+        // 启用/禁用插件
+        setEnabled: function(enabled) {
+            const elements = document.querySelectorAll('.highlight-plugin-active');
+            
+            if (!enabled) {
+                elements.forEach(element => {
+                    element.classList.remove(
+                        'highlight-plugin-hover',
+                        'highlight-plugin-touch'
+                    );
+                });
+            }
+            
+            config.enableMobile = enabled;
+        }
+    };
+    
+    // 页面加载完成后初始化
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHighlightPlugin);
+    } else {
+        initHighlightPlugin();
+    }
+    
+})();
+</script>
+<!-- 高亮框插件 - 结束 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⌬ ℙℂℍ𝕋 - 𝙃𝙪𝙗社区官网</title>
+    <style>
+        :root {
+            --bg-color: #0f0f13;
+            --card-bg: #1a1a24;
+            --text-main: #e0e0e0;
+            --text-sub: #a0a0b0;
+            --accent: #7c6ff7;
+            --border: #2d2d3a;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --info: #60a5fa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        
+        /* 导航栏 */
+        header { width: 100%; background: rgba(15, 15, 19, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 1rem 0; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .nav-container { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--accent); letter-spacing: 1px; }
+        nav ul { display: flex; list-style: none; gap: 5px; }
+        nav button { background: transparent; border: none; color: var(--text-sub); padding: 8px 16px; cursor: pointer; font-size: 0.95rem; font-weight: 600; border-radius: 8px; transition: all 0.3s ease; }
+        nav button:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+        nav button.active { color: #fff; background: var(--accent); box-shadow: 0 0 15px rgba(124, 111, 247, 0.4); }
+
+        /* 主体内容 */
+        main { width: 100%; max-width: 1000px; padding: 40px 20px; flex: 1; }
+        .section { display: none; animation: fadeIn 0.4s ease-out; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        h2 { font-size: 1.8rem; margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 15px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 25px; margin-bottom: 20px; }
+
+        /* 群聊列表样式 */
+        .group-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
+        .group-item { background: #23232e; border: 1px solid var(--border); border-radius: 10px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; }
+        .group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .group-name { font-weight: bold; font-size: 1.1rem; }
+        .group-number { font-family: monospace; color: var(--text-sub); font-size: 0.9rem; margin-bottom: 10px; }
+        .status-badge { font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
+        .status-rec { background: rgba(74, 222, 128, 0.15); color: var(--success); border: 1px solid rgba(74, 222, 128, 0.3); }
+        .status-opt { background: rgba(96, 165, 250, 0.15); color: var(--info); border: 1px solid rgba(96, 165, 250, 0.3); }
+        .status-norm { background: rgba(251, 191, 36, 0.15); color: var(--warning); border: 1px solid rgba(251, 191, 36, 0.3); }
+        .status-no { background: rgba(248, 113, 113, 0.15); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.3); }
+        .tip-box { margin-top: 30px; background: rgba(255, 255, 255, 0.03); border-left: 4px solid var(--warning); padding: 15px; font-size: 0.9rem; color: var(--text-sub); }
+
+        /* 其他板块样式 */
+        .highlight-box { background: linear-gradient(135deg, rgba(124, 111, 247, 0.1), rgba(124, 111, 247, 0.02)); border: 1px solid rgba(124, 111, 247, 0.3); padding: 20px; border-radius: 10px; margin-top: 15px; }
+        .works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .work-card { background: #23232e; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border); color: var(--text-sub); }
+        .maker-info { text-align: center; padding: 40px; }
+        .email-link { color: var(--accent); text-decoration: none; font-size: 1.2rem; border-bottom: 1px dashed var(--accent); }
+        
+        @media (max-width: 600px) {
+            .nav-container { flex-direction: column; gap: 15px; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            .group-list { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-
 <body>
-
-<canvas id="stars"></canvas>
-
-<!-- 导航栏 -->
-
-<nav>
-
-<div class="logo">企鹅科技生态</div>
-
-<ul>
-<li><a href="#home">首页</a></li>
-<li><a href="#features">功能</a></li>
-<li><a href="#about">关于</a></li>
-<li><a href="#future">未来</a></li>
-</ul>
-
-</nav>
-
-<!-- 首页 -->
-
-<section class="hero" id="home">
-
-<h1>PENGUIN<br>TECH ECOSYSTEM</h1>
-
-<p>
-
-探索未来航天文明 · 打造属于玩家的 SFS 宇宙科技社区<br>
-Spaceflight Simulator · 航天科技 · 深空探索 · 火箭工程
-
-</p>
-
-<div class="buttons">
-
-<button class="btn primary"
-onclick="window.open('https://space.bilibili.com/')">
-
-进入社区
-
-</button>
-
-<button class="btn secondary"
-onclick="window.open('https://github.com/')">
-
-GitHub
-
-</button>
-
-<button class="btn secondary"
-onclick="window.open('https://wpa.qq.com/msgrd?v=3&uin=2324298768&site=qq&menu=yes')">
-
-联系QQ
-
-</button>
-
-</div>
-
-</section>
-
-<!-- 核心内容 -->
-
-<section class="section" id="features">
-
-<h1 class="section-title">核心内容</h1>
-
-<p class="section-sub">
-
-未来航天科技社区 · SFS 玩家宇宙生态
-
-</p>
-
-<div class="cards">
-
-<div class="card">
-<h3>🚀 SFS 模组分享</h3>
-<p>
-海量 Spaceflight Simulator 模组资源与未来科技扩展。
-</p>
-</div>
-
-<div class="card">
-<h3>🛰 火箭蓝图下载</h3>
-<p>
-超级重型火箭、深空探测器、空间站蓝图系统。
-</p>
-</div>
-
-<div class="card">
-<h3>🌌 深空探索计划</h3>
-<p>
-探索火星、木星轨道与未来深空文明。
-</p>
-</div>
-
-<div class="card">
-<h3>🤖 AI航天助手</h3>
-<p>
-未来接入AI智能分析系统与自动航天设计。
-</p>
-</div>
-
-<div class="card">
-<h3>🛸 空间站建造</h3>
-<p>
-多人协作建设未来轨道空间站与深空基地。
-</p>
-</div>
-
-<div class="card">
-<h3>🌠 玩家社区</h3>
-<p>
-全球SFS玩家交流、科技论坛与深空计划。
-</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- 关于 -->
-
-<section class="section" id="about">
-
-<div class="about">
-
-<div class="about-text">
-
-<h2>关于我们</h2>
-
-<p>
-
-企鹅科技生态是一个以
-Spaceflight Simulator（SFS）
-为核心的未来航天科技社区。
-
-这里聚集：
-
-<br><br>
-
-• 火箭设计玩家<br>
-• 深空探索爱好者<br>
-• 航天工程创作者<br>
-• 科幻科技玩家<br>
-• 模组开发者
-
-<br><br>
-
-共同打造属于未来的太空文明。
-
-</p>
-
-</div>
-
-<div class="about-image">
-
-<img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1600&auto=format&fit=crop">
-
-</div>
-
-</div>
-
-<!-- 数据 -->
-
-<div class="stats">
-
-<div class="stat">
-<h1>2026</h1>
-<p>未来科技生态</p>
-</div>
-
-<div class="stat">
-<h1>SFS</h1>
-<p>航天核心社区</p>
-</div>
-
-<div class="stat">
-<h1>AI</h1>
-<p>智能航天助手</p>
-</div>
-
-<div class="stat">
-<h1>∞</h1>
-<p>无限深空探索</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- 未来 -->
-
-<section class="section" id="future">
-
-<h1 class="section-title">未来科技生态</h1>
-
-<p class="section-sub">
-
-不仅仅是游戏网站。<br><br>
-
-这里是：<br><br>
-
-一个属于航天玩家的未来宇宙。<br><br>
-
-科技 · 探索 · 自由 · 未来
-
-</p>
-
-<div class="cards">
-
-<div class="card">
-<h3>🌍 月球基地工程</h3>
-<p>
-建设未来月球轨道基地与深空科研站。
-</p>
-</div>
-
-<div class="card">
-<h3>🚀 火星殖民计划</h3>
-<p>
-打造属于未来玩家文明的火星生态。
-</p>
-</div>
-
-<div class="card">
-<h3>🛰 深空舰队系统</h3>
-<p>
-探索宇宙边缘，建立未来星际舰队。
-</p>
-</div>
-
-</div>
-
-</section>
-
-<!-- Footer -->
-
-<footer>
-
-<h2>企鹅科技生态</h2>
-
-<p>
-
-PENGUIN TECH ECOSYSTEM<br><br>
-
-“让每个人都能触碰星辰。”<br><br>
-
-© 2026 Penguin Tech Ecosystem
-
-</p>
-
-</footer>
+<!-- 粒子效果容器 -->
+<canvas id="particles-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none;"></canvas>
 
 <script>
+// 粒子效果脚本
+(function() {
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationId;
+    
+    // 设置画布尺寸
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initParticles();
+    }
+    
+    // 粒子类
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = Math.random() * 1 - 0.5;
+            this.speedY = Math.random() * 1 - 0.5;
+            this.color = `rgba(${Math.floor(Math.random() * 100 + 100)}, ${Math.floor(Math.random() * 100 + 150)}, 255, ${Math.random() * 0.5 + 0.2})`;
+        }
+        
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            
+            // 边界反弹
+            if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+            if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+        }
+        
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            
+            // 发光效果
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = this.color;
+        }
+    }
+    
+    // 初始化粒子
+    function initParticles() {
+        particles = [];
+        const particleCount = Math.min(Math.floor((canvas.width * canvas.height) / 10000), 150);
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+    }
+    
+    // 绘制连接线
+    function drawConnections() {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 100) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(100, 150, 255, ${0.2 * (1 - distance/100)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+    
+    // 动画循环
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // 更新和绘制所有粒子
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        
+        // 绘制连接线
+        drawConnections();
+        
+        // 重置阴影
+        ctx.shadowBlur = 0;
+        
+        animationId = requestAnimationFrame(animate);
+    }
+    
+    // 鼠标交互
+    let mouse = { x: null, y: null, radius: 100 };
+    
+    canvas.addEventListener('mousemove', (e) => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+        
+        // 鼠标附近的粒子产生排斥效果
+        particles.forEach(particle => {
+            const dx = mouse.x - particle.x;
+            const dy = mouse.y - particle.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < mouse.radius) {
+                particle.speedX = -dx * 0.02;
+                particle.speedY = -dy * 0.02;
+            }
+        });
+    });
+    
+    // 初始化
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    animate();
+    
+    // 清理函数（可选）
+    window.particleCleanup = function() {
+        cancelAnimationFrame(animationId);
+        window.removeEventListener('resize', resizeCanvas);
+        canvas.remove();
+    };
+})();
+</script>
+<header>
+    <div class="nav-container">
+        <div class="logo">⌬ ℙℂℍ𝕋 - 𝙃𝙪𝙗</div>
+        <nav>
+            <ul>
+                <li><button class="nav-btn active" data-target="detail">详情</button></li>
+                <li><button class="nav-btn" data-target="works">作品总览</button></li>
+                <li><button class="nav-btn" data-target="packs">资源</button></li>
+                <li><button class="nav-btn" data-target="groups">群聊</button></li>
+                <li><button class="nav-btn" data-target="maker">制作人员</button></li>
+                <li><button class="nav-btn" data-target="about">关于我们</button></li>
+                <li><button class="nav-btn" data-target="version">版本</button></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-/* 星空背景 */
+<main>
+    <!-- 详情板块 -->
+    <section id="detail" class="section active">
+        <h2>社区详情</h2>
+        <div class="card">
+            <p style="font-size: 1.1rem; margin-bottom: 15px;">欢迎来到 <strong>⌬ ℙℂℍ𝕋 - 𝙃𝙪𝙗</strong> 社区。这是一个专注于游戏模组、整合包分享以及玩家交流的活跃平台。</p>
+            <p style="color: var(--text-sub);">[必看]PCHT社区详情
+版本：1.1fixed1
+介绍及提示：本文档仅适用于PCHT社区旗下所有群聊频道，切勿过于较真。
+本文档是对于本社区管理方式和群聊频道的总结，包括通用群规，群聊/频道的组成，人员组成等。
+PCHT社区成员有必要知晓此文档
+1.PCHT社区通用群规
+宝贝老板
+2.1社区已承认的群聊和频道
+A群711234648(此群)（建议加入）
+B群746400380(正规分群)（建议加入）
+C群1107203568(非正规衍生群/待定备用群聊）（可加入）E群1105160742(非正规附属群)（可加入）
+F群134833198(非正规附属群)（一般加入）
+Z群136844747(非正规衍生群)（不建议加入）
+频道号:PCHT711234648(正规附属频道)（不建议加入）
+如何辨别群聊是否为官方：可以查看群主，若为PCHT及为正式群聊或频道，若不是即为非官方群聊或待定备用群聊
+2.宣群格式
+本群已拥有无需Google服务启用Mods的版本本群为500人规模的群若本群已满，请加分群(建议B群)或频道B群746400380(官方主群)C群1107203568(衍生群)E群1105160742(非官方附属群)F群134833198(非官方附属群)频道号:PCHT711234648（官方频道）SFS交流群,欢迎各位加入!本群由PCHT创办分享SFS各种资料有和谐的交流环境!
+3.管理详情：每半年进行管理洗牌，由社区主PCHT进行上管</p>
+            <div class="highlight-box">
+                <h3 style="margin-bottom: 10px; color: var(--accent);">核心特色</h3>
+                <ul style="padding-left: 20px; color: var(--text-sub);">
+                    <li>拥有独家宇航员版本资源</li>
+                    <li>定期更新优质 Mod 与整合包</li>
+                    <li>活跃的玩家交流氛围</li>
+                    <li>官方认证的多层级群聊体系</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-const canvas=document.getElementById("stars");
-const ctx=canvas.getContext("2d");
+    <!-- 作品板块 -->
+    <section id="works" class="section">
+        <h2>社区作品</h2>
+        <div class="card">
+            <p style="margin-bottom: 20px; color: var(--text-sub);">以下是社区成员及官方发布的精选内容与整合资源。</p>
+            <div class="works-grid">
+                <div class="work-card"><span>宇航员版本整合包</span></div>
+                <div class="work-card"><span>精选 Mod 合集:PMPpack V1.0</span></div>
+                <div class="work-card"><span>社区地图存档</span></div>
+                <div class="work-card"><span>新手引导文档</span></div>
+                <div class="work-card"><span>实用工具模组</span></div>
+                <div class="work-card"><span>游戏优化模组</span></div>
+                <div class="work-card"><span>火箭类高仿蓝图</span></div>
+                <div class="work-card"><span>机械装置蓝图</span></div>
+            </div>
+        </div>
+    </section>
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+    <!-- 群聊板块 -->
+    <section id="groups" class="section">
+        <h2>群聊大全</h2>
+        <div class="card">
+            <p style="margin-bottom: 20px; color: var(--text-sub);">请根据您的需求加入相应的群组。注意辨别官方标识。</p>
+            <div class="group-list">
+                <div class="group-item">
+                    <div class="group-header"><span class="group-name">A群 (此群)</span><span class="status-badge status-rec">建议加入</span></div>
+                    <div class="group-number">711234648</div>
+                </div>
+                <div class="group-item">
+                    <div class="group-header"><span class="group-name">B群 (正规分群)</span><span class="status-badge status-rec">建议加入</span></div>
+                    <div class="group-number">746400380</div>
+                </div>
+                <div class="group-item">
+                    <div class="group-header"><span class="group-name">C群 (非正规衍生/备用)</span><span class="status-badge status-opt">可加入</span></div>
+                    <div class="group-number">1107203568</div>
+                </div>
+                <div class="group-item">
+                    <div class="group-header"><span class="group-name">E群 (非正规附属)</span><span class="status-badge status-opt">可加入</span></div>
+                    <div class="group-number">1105160742</div>
+                </div>
+                <div class="group-item">
+                    <div class="group-header"><span class="group-name">F群 (非正规附属)</span><span class="status-badge status-norm">一般加入</span></div>
+                    <div class="group-number">134833198</div>
+                </div>
+                <div class="group-item">
+                    <div class="group-header"><span class="group-name">Z群 (非正规衍生)</span><span class="status-badge status-no">不建议加入</span></div>
+                    <div class="group-number">136844747</div>
+                </div>
+                <div class="group-item" style="border-color: var(--accent);">
+                    <div class="group-header"><span class="group-name">官方频道 (正规附属)</span><span class="status-badge status-rec">建议加入</span></div>
+                    <div class="group-number">PCHT711234648</div>
+                </div>
+            </div>
+            <div class="tip-box">
+                <strong>🛡️ 如何辨别群聊是否为官方：</strong><br>
+                请查看群主信息。若群主为 <strong>PCHT</strong>，则为正式群聊或频道；若不是，即为非官方群聊或待定备用群聊。
+            </div>
+        </div>
+    </section>
 
-let stars=[];
+    <!-- 制作人员板块 -->
+    <section id="maker" class="section">
+        <h2>网页制作人员</h2>
+        <div class="card maker-info">
+            <div style="font-size: 3rem; margin-bottom: 20px;">👨‍💻</div>
+            <p style="margin-bottom: 10px; color: var(--text-sub);">本页面由以下开发者制作维护</p>
+            <a href="mailto:2414300353@qq.com" class="email-link">2414300353@qq.com</a>
+        </div>
+    </section>
 
-for(let i=0;i<300;i++){
+    <!-- 关于我们板块 -->
+    <section id="about" class="section">
+        <h2>关于我们</h2>
+        <div class="card">
+            <div class="highlight-box" style="text-align: center; border-color: var(--accent);">
+                <h3 style="font-size: 1.4rem; margin-bottom: 10px;">【𝐁】⌬ ℙℂℍ𝕋 - 𝚂𝚞𝚋欢迎您的到来</h3>
+                <p style="font-size: 1.1rem; color: var(--accent); font-weight: bold; margin: 10px 0;">群号：746400380</p>
+            </div>
+            <div style="margin-top: 25px;">
+                <p style="margin-bottom: 15px;">本群最大人数限制为 <strong>500人</strong>。希望各位来到群中后，多邀请一些好友加入，共同壮大我们的PCHT社区。</p>
+                <h4 style="margin: 20px 0 10px 0; color: var(--text-main);">社区现状：</h4>
+                <div style="margin-bottom: 15px;">
+                    <span style="display:inline-block; padding:4px 10px; border-radius:20px; font-size:0.8rem; margin-right:8px; background:rgba(96,165,250,0.2); color:var(--info);">宇航员版本已实装</span>
+                    <span style="display:inline-block; padding:4px 10px; border-radius:20px; font-size:0.8rem; margin-right:8px; background:rgba(74,222,128,0.2); color:var(--success);">优质 Mod 库</span>
+                    <span style="display:inline-block; padding:4px 10px; border-radius:20px; font-size:0.8rem; background:rgba(74,222,128,0.2); color:var(--success);">精品整合包</span>
+                </div>
+                <p style="color: var(--text-sub); font-size: 1.15rem;">介绍：虽然本群为社区副群，但我们是一个比较活跃的交流社区，拥有大量的资源储备和热情的群友。无论是探讨游戏技巧，还是分享创作心得，这里都是您的最佳选择。</p>
+            </div>
+        <div class="card">
+            <div class="highlight-box" style="text-align: center; border-color: var(--accent);">
+                <h3 style="font-size: 1.4rem; margin-bottom: 10px;">【𝐀】⌬ ℙℂℍ𝕋 - 𝙃𝙪𝙗欢迎您的到来</h3>
+                <p style="font-size: 1.1rem; color: var(--accent); font-weight: bold; margin: 10px 0;">群号：711234648</p>
+            </div>
+            <div style="margin-top: 25px;">
+                <p style="margin-bottom: 15px;">本群最大人数限制为 <strong>500人</strong>。希望各位来到群中后，多邀请一些好友加入，共同壮大我们的PCHT社区。</p>
+                <h4 style="margin: 20px 0 10px 0; color: var(--text-main);">社区现状：</h4>
+                <div style="margin-bottom: 15px;">
+                    <span style="display:inline-block; padding:4px 10px; border-radius:20px; font-size:0.8rem; margin-right:8px; background:rgba(96,165,250,0.2); color:var(--info);">宇航员版本已实装</span>
+                    <span style="display:inline-block; padding:4px 10px; border-radius:20px; font-size:0.8rem; margin-right:8px; background:rgba(74,222,128,0.2); color:var(--success);">优质 Mod 库</span>
+                    <span style="display:inline-block; padding:4px 10px; border-radius:20px; font-size:0.8rem; background:rgba(74,222,128,0.2); color:var(--success);">精品整合包</span>
+                    <span style="display:inline-block; padding:4px 10px; border-radius:20px; font-size:0.8rem; background:rgba(86, 163, 250, 0.2); color:var(--success);">自助群机器人</span>
+                    <span style="display:inline-block; padding:4px 10px; border-radius:20px; font-size:0.8rem; background:rgba(238, 61, 61, 0.2); color:var(--success);">极高频活跃度</span>
+                </div>
+                <p style="color: var(--text-main); font-size: 1.15rem;">介绍：本群为PCHT社区<strong>主群</strong>，拥有整个PCHT社区<strong>60%</strong>的资源，是PCHT社区<strong>最大</strong>群聊。（虽然每周会进行大清洗），但氛围融洽，大佬手把手指导，有任何不懂的都可以找管理或者Q群管家询问。无论是探讨游戏技巧，还是分享创作心得，这里都是您的最佳选择。</p>
+                <p style="color: var(--text-sub); font-size: 0.75rem;">由于本群为PCHT社区主群，所以为了保持高活跃度，本群会每周清理20位死人</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 版本板块 -->
+    <section id="version" class="section">
+       <h2>版本</h2>
+       <div class="card maker-info">
+           <div style="font-size: 2.5rem; margin-bottom: 20px;">目前版本：</div>
+           <p style="margin-bottom: 20px; color: var(--text-sub);">PCHT v1.7</p>
+           <p style="margin-bottom: 20px; color: var(--text-sub);">欢迎大家进入PCHT频道查看网站（还有其他资源）的版本.</p>
+		   <p style="margin-bottom: 10px; color: var(--text-sub);">versioned by 2414300353@qq.com</p>
+           <p style="margin-bottom: 10px; color: var(--text-sub);">欢迎访问我的邮箱</p>
+       </div>
+   </section>
 
-stars.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2,
-d:Math.random()*1
-
-});
-
+    <!-- 资源板块 -->
+    <section id="packs" class="section">
+       <h2>资源</h2>
+       <div style="max-width: 800px; margin: 20px auto; background: #1a1a24; padding: 20px; border-radius: 10px;">
+    <h3 style="color: #7c6ff7; text-align: center; margin-bottom: 20px;">PCHT社区原创模组统计</h3>
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #e0e0e0;">宇航员版本整合包密码PCHT</span>
+                <span style="color: #4ade80;">95%</span>
+            </div>
+            <div style="height: 20px; background: #2d2d3a; border-radius: 10px; overflow: hidden;">
+                <div style="width: 95%; height: 100%; background: linear-gradient(90deg, #7c6ff7, #4ade80);"></div>
+            </div>
+        </div>
+        <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #e0e0e0;">PMP整合包系列原创整合包</span>
+                <span style="color: #60a5fa;">85%</span>
+            </div>
+            <div style="height: 20px; background: #2d2d3a; border-radius: 10px; overflow: hidden;">
+                <div style="width: 85%; height: 100%; background: linear-gradient(90deg, #7c6ff7, #60a5fa);"></div>
+            </div>
+        </div>
+        <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #e0e0e0;">实用工具模组</span>
+                <span style="color: #fbbf24;">75%</span>
+            </div>
+            <div style="height: 20px; background: #2d2d3a; border-radius: 10px; overflow: hidden;">
+                <div style="width: 75%; height: 100%; background: linear-gradient(90deg, #7c6ff7, #fbbf24);"></div>
+            </div>
+        </div>
+        <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #e0e0e0;">游戏优化模组</span>
+                <span style="color: #f87171;">60%</span>
+            </div>
+            <div style="height: 20px; background: #2d2d3a; border-radius: 10px; overflow: hidden;">
+                <div style="width: 60%; height: 100%; background: linear-gradient(90deg, #7c6ff7, #f87171);"></div>
+            </div>
+        </div>
+    </div>
+    <div style="max-width: 800px; margin: 20px auto; background: #1a1a24; padding: 20px; border-radius: 10px;">
+    <h3 style="color: #7c6ff7; text-align: center; margin-bottom: 20px;">PCHT社区原创蓝图统计</h3>
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #e0e0e0;">火箭类高仿蓝图</span>
+                <span style="color: #4ade80;">120+项</span>
+            </div>
+            <div style="height: 20px; background: #2d2d3a; border-radius: 10px; overflow: hidden;">
+                <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #667eea, #764ba2);"></div>
+            </div>
+        </div>
+        <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #e0e0e0;">机械装置蓝图</span>
+                <span style="color: #60a5fa;">45+项</span>
+            </div>
+            <div style="height: 20px; background: #2d2d3a; border-radius: 10px; overflow: hidden;">
+                <div style="width: 75%; height: 100%; background: linear-gradient(90deg, #667eea, #60a5fa);"></div>
+            </div>
+        </div>
+        <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #e0e0e0;">交通工具蓝图</span>
+                <span style="color: #fbbf24;">30+项</span>
+            </div>
+            <div style="height: 20px; background: #2d2d3a; border-radius: 10px; overflow: hidden;">
+                <div style="width: 50%; height: 100%; background: linear-gradient(90deg, #667eea, #fbbf24);"></div>
+            </div>
+        </div>
+        <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #e0e0e0;">装饰性蓝图</span>
+                <span style="color: #f87171;">25+项</span>
+            </div>
+            <div style="height: 20px; background: #2d2d3a; border-radius: 10px; overflow: hidden;">
+                <div style="width: 42%; height: 100%; background: linear-gradient(90deg, #667eea, #f87171);"></div>
+       <div class="card maker-info">
+           <div style="font-size: 2.5rem; margin-bottom: 20px;">文件是公开的吗</div>
+           <p style="margin-bottom: 20px; color: var(--text-sub);">是的，欢迎大家进入PCHT频道和群聊查看上述所有资源，本版块提及的所有资源都对PCHT社区成员无偿开放.</p>
+       </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 社区资源按钮插件 -->
+<style>
+/* 社区资源按钮样式 */
+.community-resource-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    margin: 0 10px;
+    text-decoration: none;
+    min-width: 140px;
 }
 
-function drawStars(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle="white";
-
-ctx.beginPath();
-
-for(let i=0;i<stars.length;i++){
-
-let s=stars[i];
-
-ctx.moveTo(s.x,s.y);
-
-ctx.arc(s.x,s.y,s.r,0,Math.PI*2,true);
-
+.community-resource-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
 }
 
-ctx.fill();
-
-moveStars();
-
+.community-resource-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
 }
 
-function moveStars(){
-
-for(let i=0;i<stars.length;i++){
-
-let s=stars[i];
-
-s.y+=s.d;
-
-if(s.y>canvas.height){
-
-s.y=0;
-s.x=Math.random()*canvas.width;
-
+.community-resource-btn i {
+    margin-right: 8px;
+    font-size: 16px;
 }
 
+/* 社区资源介绍页面样式 */
+.community-resource-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
 }
 
+.community-resource-content {
+    background: white;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
 }
 
-setInterval(drawStars,33);
+.community-resource-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px 30px;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-window.addEventListener("resize",()=>{
+.community-resource-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+.close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
 
-});
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
 
+.community-resource-body {
+    padding: 30px;
+}
+
+.intro-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.intro-text .highlight {
+    color: #667eea;
+    font-weight: 700;
+}
+
+/* 统计图表容器 */
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.stat-item {
+    flex: 1;
+    min-width: 250px;
+    text-align: center;
+}
+
+.stat-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 扇形统计图样式 */
+.pie-chart {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+}
+
+.pie-chart canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.chart-label {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* 资源列表 */
+.resource-list {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.resource-list h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.resource-item {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.resource-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.resource-item i {
+    color: #667eea;
+    font-size: 20px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.resource-item span {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .community-resource-content {
+        width: 95%;
+        margin: 10px;
+    }
+    
+    .stats-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .stat-item {
+        min-width: 200px;
+    }
+    
+    .resource-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+</style>
+
+<!-- 社区资源按钮HTML -->
+<button class="community-resource-btn" id="communityResourceBtn">
+    <i class="fas fa-boxes"></i> 社区资源
+</button>
+
+<!-- 社区资源介绍弹窗 -->
+<div class="community-resource-modal" id="communityResourceModal">
+    <div class="community-resource-content">
+        <div class="community-resource-header">
+            <h2>PCHT社区资源中心</h2>
+            <button class="close-btn" id="closeModalBtn">&times;</button>
+        </div>
+        
+        <div class="community-resource-body">
+            <p class="intro-text">
+                <span class="highlight">PCHT社区</span>拥有超100项原创蓝图资源，以及独立制作的PMP整合包（目前不再更新）。
+            </p>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-title">蓝图资源统计</div>
+                    <div class="pie-chart">
+                        <canvas id="blueprintChart">
+                        <div class="chart-percentage">65%
+                    </div>
+                    <div class="chart-label">PCHT社区占比
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-title">Mods资源统计</div>
+                    <div class="pie-chart">
+                        <canvas id="modsChart">
+                        <div class="chart-percentage">90%
+                    </div>
+                    <div class="chart-label">PCHT社区占比
+                </div>
+            </div>
+            
+            <div class="resource-list">
+                <h3>主要资源分类</h3>
+                <div class="resource-grid">
+                    <div class="resource-item">
+                        <i class="fas fa-drafting-compass"></i>
+                        <span>建筑蓝图</span>
+                    </div>
+                    <div class="resource-item">
+                        <i class="fas fa-cogs"></i>
+                        <span>机械设计</span>
+                    </div>
+                    <div class="resource-item">
+                        <i class="fas fa-gamepad"></i>
+                        <span>游戏模组</span>
+                    </div>
+                    <div class="resource-item">
+                        <i class="fas fa-tools"></i>
+                        <span>实用工具</span>
+                    </div>
+                    <div class="resource-item">
+                        <i class="fas fa-paint-brush"></i>
+                        <span>材质包</span>
+                    </div>
+                    <div class="resource-item">
+                        <i class="fas fa-code"></i>
+                        <span>脚本插件</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 社区资源按钮插件脚本
+(function() {
+    'use strict';
+    
+    // 初始化插件
+    function initCommunityResourcePlugin() {
+        // 获取DOM元素
+        const openBtn = document.getElementById('communityResourceBtn');
+        const modal = document.getElementById('communityResourceModal');
+        const closeBtn = document.getElementById('closeModalBtn');
+        
+        // 打开弹窗
+        openBtn.addEventListener('click', function() {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+            drawCharts(); // 绘制图表
+        });
+        
+        // 关闭弹窗
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // 点击弹窗外部关闭
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 绘制统计图表
+        function drawCharts() {
+            // 蓝图统计图
+            const blueprintCanvas = document.getElementById('blueprintChart');
+            const blueprintCtx = blueprintCanvas.getContext('2d');
+            
+            // 设置canvas尺寸
+            blueprintCanvas.width = 180;
+            blueprintCanvas.height = 180;
+            
+            // 绘制蓝图扇形图
+            drawPieChart(blueprintCtx, 180, 180, 65, '#667eea', '#e0e7ff');
+            
+            // Mods统计图
+            const modsCanvas = document.getElementById('modsChart');
+            const modsCtx = modsCanvas.getContext('2d');
+            
+            modsCanvas.width = 180;
+            modsCanvas.height = 180;
+            
+            // 绘制Mods扇形图
+            drawPieChart(modsCtx, 180, 180, 90, '#764ba2', '#f3e8ff');
+        }
+        
+        // 绘制扇形图函数
+        function drawPieChart(ctx, width, height, percentage, color, bgColor) {
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.min(width, height) / 2 - 10;
+            
+            // 绘制背景圆
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.fillStyle = bgColor;
+            ctx.fill();
+            
+            // 绘制扇形
+            const startAngle = -Math.PI / 2; // 从12点方向开始
+            const endAngle = startAngle + (percentage / 100) * Math.PI * 2;
+            
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.fill();
+            
+            // 绘制边框
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+        
+        // 初始化图表
+        drawCharts();
+        
+        console.log('✅ 社区资源按钮插件已加载');
+    }
+    
+    // 页面加载完成后初始化
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCommunityResourcePlugin);
+    } else {
+        initCommunityResourcePlugin();
+    }
+    
+    // 公开API
+    window.CommunityResourcePlugin = {
+        openModal: function() {
+            document.getElementById('communityResourceModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        },
+        closeModal: function() {
+            document.getElementById('communityResourceModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    };
+    
+})();
+</script>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.section');
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                navBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const targetId = btn.getAttribute('data-target');
+                sections.forEach(section => section.classList.remove('active'));
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) targetSection.classList.add('active');
+            });
+        });
+    });
 </script>
 
+<!-- 版权信息插件 -->
+<div id="pcht-footer" style="
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    z-index: 9999;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+">
+    <span style="color: #4fc3f7;">©2026 PCHT社区</span> 
+    <span style="margin: 0 10px; color: #ccc;">|</span>
+    <span>All Rights Reserved</span>
+    <span style="margin: 0 10px; color: #ccc;">|</span>
+    <span style="color: #aaa; font-size: 12px;">Powered by PCHT System</span>
+</div>
+
+<script>
+// 版权信息插件脚本
+(function() {
+    // 确保插件只在页面加载完成后执行
+    document.addEventListener('DOMContentLoaded', function() {
+        const footer = document.getElementById('pcht-footer');
+        
+        // 添加鼠标悬停效果
+        footer.addEventListener('mouseenter', function() {
+            this.style.background = 'rgba(0, 0, 0, 0.9)';
+            this.style.transition = 'background 0.3s ease';
+        });
+        
+        footer.addEventListener('mouseleave', function() {
+            this.style.background = 'rgba(0, 0, 0, 0.8)';
+        });
+        
+        // 添加点击效果（可选）
+        footer.addEventListener('click', function() {
+            const currentYear = new Date().getFullYear();
+            if (currentYear > 2026) {
+                this.querySelector('span:first-child').textContent = `©${currentYear} PCHT社区`;
+            }
+        });
+        
+        // 响应式调整
+        function adjustFooter() {
+            if (window.innerWidth < 768) {
+                footer.style.fontSize = '12px';
+                footer.style.padding = '8px 0';
+            } else {
+                footer.style.fontSize = '14px';
+                footer.style.padding = '12px 0';
+            }
+        }
+        
+        // 初始调整
+        adjustFooter();
+        
+        // 监听窗口大小变化
+        window.addEventListener('resize', adjustFooter);
+        
+        // 控制台提示
+        console.log('PCHT社区版权插件已加载');
+    });
+})();
+</script>
+
+<!-- 高亮框插件 - 开始 -->
+<style>
+/* 高亮框插件样式 */
+.highlight-plugin-active {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+}
+
+.highlight-plugin-hover {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5),
+                0 0 20px rgba(59, 130, 246, 0.3) !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    z-index: 1000 !important;
+    border-color: #3b82f6 !important;
+}
+
+.highlight-plugin-touch {
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.6),
+                0 0 25px rgba(139, 92, 246, 0.4) !important;
+    transform: translateY(-1px) scale(1.01) !important;
+    z-index: 1000 !important;
+    border-color: #8b5cf6 !important;
+}
+
+/* 调试模式下的轮廓线 */
+.highlight-plugin-debug .highlight-plugin-active {
+    outline: 1px dashed rgba(239, 68, 68, 0.3) !important;
+}
+</style>
+
+<script>
+// 高亮框插件 v1.0
+(function() {
+    'use strict';
+    
+    // 配置选项
+    const config = {
+        // 高亮颜色（蓝色主题）
+        hoverColor: '#3b82f6',      // 鼠标悬停颜色
+        touchColor: '#8b5cf6',      // 触摸高亮颜色
+        shadowIntensity: 0.5,       // 阴影强度 0-1
+        animationDuration: 300,     // 动画时长（毫秒）
+        enableMobile: true,         // 启用移动端触摸支持
+        excludeSelectors: [         // 排除的元素选择器
+            'body',
+            'html',
+            '.no-highlight',
+            '[data-no-highlight]',
+            'script',
+            'style',
+            'meta',
+            'link'
+        ],
+        includeSelectors: [         // 包含的元素选择器（如果指定）
+            // 'button',
+            // 'a',
+            // 'input',
+            // 'select',
+            // 'textarea',
+            // '.interactive',
+            // '[data-highlight]'
+        ],
+        debugMode: false            // 调试模式（显示所有可高亮元素）
+    };
+    
+    // 初始化插件
+    function initHighlightPlugin() {
+        console.log('🔦 高亮框插件 v1.0 正在初始化...');
+        
+        // 获取所有需要添加高亮的元素
+        const elements = getHighlightableElements();
+        
+        if (elements.length === 0) {
+            console.warn('⚠️ 未找到可高亮的元素，请检查页面结构');
+            return;
+        }
+        
+        console.log(`✅ 找到 ${elements.length} 个可高亮元素`);
+        
+        // 为每个元素添加事件监听器
+        elements.forEach(element => {
+            setupElementEvents(element);
+        });
+        
+        // 添加调试模式类
+        if (config.debugMode) {
+            document.documentElement.classList.add('highlight-plugin-debug');
+        }
+        
+        // 添加全局样式
+        addGlobalStyles();
+        
+        console.log('🎉 高亮框插件初始化完成！');
+    }
+    
+    // 获取所有可高亮元素
+    function getHighlightableElements() {
+        let selectors = [
+            // 交互元素
+            'button',
+            'a',
+            'input',
+            'select',
+            'textarea',
+            'label',
+            
+            // 可点击元素
+            '[onclick]',
+            '[role="button"]',
+            '[role="link"]',
+            '[tabindex]:not([tabindex="-1"])',
+            
+            // 表单元素
+            'button[type]',
+            'input[type="button"]',
+            'input[type="submit"]',
+            'input[type="reset"]',
+            
+            // 自定义高亮元素
+            '.highlightable',
+            '[data-highlightable]'
+        ];
+        
+        // 如果指定了包含选择器，则使用它们
+        if (config.includeSelectors.length > 0) {
+            selectors = config.includeSelectors;
+        }
+        
+        // 获取所有匹配的元素
+        let allElements = [];
+        selectors.forEach(selector => {
+            try {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => allElements.push(el));
+            } catch (e) {
+                console.warn(`选择器 "${selector}" 无效:`, e);
+            }
+        });
+        
+        // 去重
+        allElements = [...new Set(allElements)];
+        
+        // 过滤排除的元素
+        return allElements.filter(element => {
+            // 检查是否在排除列表中
+            const isExcluded = config.excludeSelectors.some(selector => {
+                if (selector.startsWith('.') || selector.startsWith('[')) {
+                    return element.matches(selector);
+                }
+                return element.tagName.toLowerCase() === selector.toLowerCase();
+            });
+            
+            // 检查元素是否可见且可交互
+            const isVisible = element.offsetWidth > 0 && 
+                            element.offsetHeight > 0 && 
+                            window.getComputedStyle(element).display !== 'none';
+            
+            const isInteractive = !element.hasAttribute('disabled') && 
+                                element.getAttribute('aria-disabled') !== 'true';
+            
+            return !isExcluded && isVisible && isInteractive;
+        });
+    }
+    
+    // 为元素设置事件监听器
+    function setupElementEvents(element) {
+        // 添加基础类
+        element.classList.add('highlight-plugin-active');
+        
+        // 鼠标事件（桌面端）
+        element.addEventListener('mouseenter', handleMouseEnter);
+        element.addEventListener('mouseleave', handleMouseLeave);
+        
+        // 触摸事件（移动端）
+        if (config.enableMobile) {
+            element.addEventListener('touchstart', handleTouchStart, { passive: true });
+            element.addEventListener('touchend', handleTouchEnd, { passive: true });
+            element.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+        }
+        
+        // 焦点事件（键盘导航）
+        element.addEventListener('focus', handleFocus);
+        element.addEventListener('blur', handleBlur);
+        
+        // 点击事件（移除触摸高亮）
+        element.addEventListener('click', handleClick);
+    }
+    
+    // 事件处理函数
+    function handleMouseEnter(event) {
+        const element = event.currentTarget;
+        element.classList.add('highlight-plugin-hover');
+        element.classList.remove('highlight-plugin-touch');
+    }
+    
+    function handleMouseLeave(event) {
+        const element = event.currentTarget;
+        element.classList.remove('highlight-plugin-hover');
+    }
+    
+    function handleTouchStart(event) {
+        const element = event.currentTarget;
+        element.classList.add('highlight-plugin-touch');
+        element.classList.remove('highlight-plugin-hover');
+    }
+    
+    function handleTouchEnd(event) {
+        const element = event.currentTarget;
+        // 延迟移除触摸高亮，让用户看到反馈
+        setTimeout(() => {
+            element.classList.remove('highlight-plugin-touch');
+        }, 300);
+    }
+    
+    function handleFocus(event) {
+        const element = event.currentTarget;
+        element.classList.add('highlight-plugin-hover');
+    }
+    
+    function handleBlur(event) {
+        const element = event.currentTarget;
+        element.classList.remove('highlight-plugin-hover');
+        element.classList.remove('highlight-plugin-touch');
+    }
+    
+    function handleClick(event) {
+        const element = event.currentTarget;
+        element.classList.remove('highlight-plugin-touch');
+        
+        // 添加点击动画
+        element.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+            element.style.transform = '';
+        }, 150);
+    }
+    
+    // 添加全局样式
+    function addGlobalStyles() {
+        const styleId = 'highlight-plugin-dynamic-styles';
+        if (document.getElementById(styleId)) return;
+        
+        const style = document.createElement('style');
+        style.id = styleId;
+        style.textContent = `
+            /* 动态生成的样式 */
+            .highlight-plugin-active {
+                transition-property: box-shadow, transform, border-color !important;
+                transition-duration: ${config.animationDuration}ms !important;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+            }
+            
+            /* 防止过渡冲突 */
+            .highlight-plugin-active * {
+                transition: none !important;
+            }
+            
+            /* 打印时隐藏高亮效果 */
+            @media print {
+                .highlight-plugin-hover,
+                .highlight-plugin-touch {
+                    box-shadow: none !important;
+                    transform: none !important;
+                    border-color: inherit !important;
+                }
+            }
+        `;
+        
+        document.head.appendChild(style);
+    }
+    
+    // 公开API（可选）
+    window.HighlightPlugin = {
+        // 重新初始化插件
+        reinit: function() {
+            // 移除所有现有事件监听器
+            const elements = document.querySelectorAll('.highlight-plugin-active');
+            elements.forEach(element => {
+                element.classList.remove(
+                    'highlight-plugin-active',
+                    'highlight-plugin-hover',
+                    'highlight-plugin-touch'
+                );
+                
+                // 克隆元素以移除事件监听器（简单方法）
+                const newElement = element.cloneNode(true);
+                element.parentNode.replaceChild(newElement, element);
+            });
+            
+            // 重新初始化
+            initHighlightPlugin();
+        },
+        
+        // 添加元素到高亮列表
+        addElement: function(selectorOrElement) {
+            let elements = [];
+            
+            if (typeof selectorOrElement === 'string') {
+                elements = document.querySelectorAll(selectorOrElement);
+            } else if (selectorOrElement instanceof Element) {
+                elements = [selectorOrElement];
+            } else if (selectorOrElement instanceof NodeList || Array.isArray(selectorOrElement)) {
+                elements = selectorOrElement;
+            }
+            
+            elements.forEach(element => {
+                if (!element.classList.contains('highlight-plugin-active')) {
+                    setupElementEvents(element);
+                }
+            });
+        },
+        
+        // 从高亮列表中移除元素
+        removeElement: function(selectorOrElement) {
+            let elements = [];
+            
+            if (typeof selectorOrElement === 'string') {
+                elements = document.querySelectorAll(selectorOrElement);
+            } else if (selectorOrElement instanceof Element) {
+                elements = [selectorOrElement];
+            }
+            
+            elements.forEach(element => {
+                element.classList.remove(
+                    'highlight-plugin-active',
+                    'highlight-plugin-hover',
+                    'highlight-plugin-touch'
+                );
+                
+                // 移除事件监听器（通过克隆）
+                const newElement = element.cloneNode(true);
+                element.parentNode.replaceChild(newElement, element);
+            });
+        },
+        
+        // 更新配置
+        updateConfig: function(newConfig) {
+            Object.assign(config, newConfig);
+            this.reinit();
+        },
+        
+        // 获取当前配置
+        getConfig: function() {
+            return { ...config };
+        },
+        
+        // 启用/禁用插件
+        setEnabled: function(enabled) {
+            const elements = document.querySelectorAll('.highlight-plugin-active');
+            
+            if (!enabled) {
+                elements.forEach(element => {
+                    element.classList.remove(
+                        'highlight-plugin-hover',
+                        'highlight-plugin-touch'
+                    );
+                });
+            }
+            
+            config.enableMobile = enabled;
+        }
+    };
+    
+    // 页面加载完成后初始化
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHighlightPlugin);
+    } else {
+        initHighlightPlugin();
+    }
+    
+})();
+</script>
+<!-- 高亮框插件 - 结束 -->
 </body>
 </html>
