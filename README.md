@@ -1,2 +1,2 @@
-# Flying-Penguin.github.io
+# FlyingPenguin.github.io
 It's pure entertainment.
